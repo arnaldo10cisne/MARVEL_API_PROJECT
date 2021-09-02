@@ -1,0 +1,155 @@
+/* VARIABLES */
+
+:root {
+
+}
+
+/* GENERAL STYLES */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-width: 320px;
+}
+
+li {
+    list-style: none;
+}
+
+/* HEADER */
+
+header {
+    width: 100%;
+}
+
+.upper_nav_bar{}
+.upper_nav_bar>ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    width: 100%;
+    padding: 10px;
+
+    background-color: rgb(61, 61, 61);
+}
+.upper_nav_bar__item {
+    color: rgb(196, 196, 196);
+    font-size: 1.6rem;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.title_container {
+    display: flex;
+    justify-content: center;
+
+    padding: 20px;
+
+    background-color: rgb(152, 0, 0);
+}
+.title {
+    color: white;
+    font-size: 2.5rem;
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.mode_selector_bar {
+    display: flex;
+    justify-content: space-around;
+
+    padding: 20px;
+
+    background-color: rgb(152, 0, 0);
+}
+.mode_selector_bar__button {
+    padding: 20px 6px;
+    border: none;
+    border-radius: 2px;
+}
+
+/* MAIN */
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.guidebook__control_panel{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.subtitle {
+    text-align: center;
+    padding: 5px;
+    margin-top: 5px;
+    font-size: 2rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.control_panel__search_bar {
+    width: 90%;
+    margin: 5px auto;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+}
+.control_panel__button_container{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 5px 0px 10px;
+}
+.control_panel__button {
+    width: 40%;
+    padding: 10px;
+}
+.guidebook__character_galery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.character_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+}
+.character_thumbnail{
+    width: 150px;
+    height: 150px;
+    background-image: url(https://via.placeholder.com/150);
+    background-size: cover;
+}
+.character_name {
+    margin: 10px;
+    font-size: 1.8rem;
+}
+.character_description {
+    font-size: 1.6rem;
+    text-align: justify;
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+/* FOOTER */
+
+
+
+/* MEDIA QUERIES */
+
+@media screen {
+    
+}
