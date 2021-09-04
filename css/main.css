@@ -128,7 +128,7 @@ main {
     margin: 5px 0;
     background-color: rgb(168, 168, 168);
 }
-.character_search_result__picture_container {
+.character_search_result__picture_box {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -136,7 +136,7 @@ main {
     height: 100px;
     background-color: rgb(136, 136, 136);
 }
-.character_search_result__container__picture {
+.character_search_result__picture {
     
     max-width: 100px;
     max-height: 100px;

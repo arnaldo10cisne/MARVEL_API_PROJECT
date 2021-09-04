@@ -38,9 +38,21 @@
             </div>
         </div>
         <div id="characterSearchResults" class="guidebook__character_search_results">
+            <template id="templateSearchResults">
+                <div id="resultID999" class="character_search_result__container">
+                    <div class="character_search_result__picture_box"><img class="character_search_result__picture" src="https://via.placeholder.com/150" alt=""></div>
+                    <span class="character_search_result__container__name">[HERO NAME]</span>
+                </div>
+            </template>
         </div>
         <div id='characterGalery' class="guidebook__character_galery">
-            
+            <template id="templateCharacterRender">
+                <div class="character_container">
+                    <img id="charThumbnail" class="character_thumbnail" src="https://via.placeholder.com/150" alt=""> 
+                    <span id="charName" class="character_name">[HERO NAME]</span>
+                    <p id="charDescription" class="character_description">[HERO DESCRIPTION]</p>
+                </div>
+            </template>
         </div>
     </main>
 
