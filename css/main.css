@@ -115,6 +115,41 @@ main {
     width: 40%;
     padding: 10px;
 }
+.guidebook__character_search_results{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.character_search_result__container{
+    display: flex;
+    align-items: center;
+    width: 90%;
+    margin: 5px 0;
+    background-color: rgb(168, 168, 168);
+}
+.character_search_result__picture_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    background-color: rgb(136, 136, 136);
+}
+.character_search_result__container__picture {
+    
+    max-width: 100px;
+    max-height: 100px;
+}
+.character_search_result__container__name{
+    flex-grow: 1;
+    font-size: 1.8rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+    max-width: 60%;
+    margin: 8px auto;
+    padding: 0 10px;
+}
 .guidebook__character_galery {
     display: flex;
     flex-direction: column;
@@ -130,8 +165,8 @@ main {
 .character_thumbnail{
     width: 150px;
     height: 150px;
-    background-image: url(https://via.placeholder.com/150);
-    background-size: cover;
+    /* background-image: url(https://via.placeholder.com/150); */
+    /* background-size: cover; */
 }
 .character_name {
     margin: 10px;
