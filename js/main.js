@@ -11,6 +11,9 @@ const characterSearchResults = document.getElementById('characterSearchResults')
 const templateSearchResults = document.getElementById('templateSearchResults')
 const templateCharacterRender = document.getElementById('templateCharacterRender')
 
+
+
+
 let ACCESSDATA
 let ACCESSDATA_isLoaded = false
 
@@ -42,6 +45,34 @@ const marvel = {
                     htmlNode.querySelector('.character_thumbnail').setAttribute("src", `${heroSelected.thumbnail.path}.${heroSelected.thumbnail.extension}`)
                     htmlNode.querySelector('.character_description').textContent = heroSelected.description
                     characterGalery.appendChild(htmlNode)
+                    // Code to create list of comics
+                    {
+                        const comicRailTemplate = document.getElementById('comicRailTemplate')
+                        const comicsRail = document.getElementById('comicsRail')
+                        let comicThumbnailsURI = []
+                        for (let index = 0; index < heroSelected.comics.items.length; index++) {
+                            const comicFound = heroSelected.comics.items[index];
+                            let tempNode = comicRailTemplate.content
+                            let htmlNode = document.importNode(tempNode,true)
+                            htmlNode.querySelector('.comic_container__name').textContent = comicFound.name
+                            htmlNode.querySelector('.comic_container__thumbnail').setAttribute("id", `comicPicture${index}`)
+                            comicThumbnailsURI.push(comicFound.resourceURI)
+                            comicsRail.appendChild(htmlNode)
+                        }
+                        // let promises = [comicThumbnailsURI]
+                        // // console.log()
+                        // for (let index = 0; index < comicThumbnailsURI.length; index++) {
+                        //     console.log(comicThumbnailsURI[index])
+                        //     fetch(comicThumbnailsURI[index])
+                        // }
+                        // Promise.all(promises)
+                        //     .then (res => console.log(res))
+                        // fetch(comicThumbnailsURI[0])
+                        //     .then(res => res.json())
+                        //     .then( json => {
+                        //         func.$(`comicPicture0`).setAttribute("src", `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`)
+                        //     })
+                    }
                 }
             })
     },

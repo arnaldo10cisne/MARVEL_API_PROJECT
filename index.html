@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MARVEL API PROJECT</title>
     <link rel="stylesheet" href="./css/main.css">
+    <!-- FONT IMPORTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 </head>
 <body>
     
@@ -48,9 +52,36 @@
         <div id='characterGalery' class="guidebook__character_galery">
             <template id="templateCharacterRender">
                 <div class="character_container">
-                    <img id="charThumbnail" class="character_thumbnail" src="https://via.placeholder.com/150" alt=""> 
                     <span id="charName" class="character_name">[HERO NAME]</span>
-                    <p id="charDescription" class="character_description">[HERO DESCRIPTION]</p>
+                    <img id="charThumbnail" class="character_thumbnail" src="https://via.placeholder.com/150" alt=""> 
+                    <p id="charDescription" class="character_description">[DESCRIPTION]</p>
+                    <h3 class="characterRender_title">Comics</h3>
+                    <div id="comicsRail" class="comics_rail">
+                        <template id="comicRailTemplate">
+                            <div class="comic_container">
+                                <img id="comicPicture00" class="comic_container__thumbnail" src="https://via.placeholder.com/100" alt="">
+                                <span class="comic_container__name">[COMIC NAME]</span>
+                            </div>
+                        </template>
+                    </div>
+                    <h3 class="characterRender_title">Series</h3>
+                    <div class="series_rail">
+                        <template id="seriesRailTemplate">
+                            
+                        </template>
+                    </div>
+                    <h3 class="characterRender_title">Stories</h3>
+                    <div class="stories_rail">
+                        <template id="storiesRailTemplate">
+
+                        </template>
+                    </div>
+                    <h3 class="characterRender_title">More info</h3>
+                    <div class="moreInfo_rail">
+                        <template id="moreInfoRailTemplate">
+
+                        </template>
+                    </div>
                 </div>
             </template>
         </div>
