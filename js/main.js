@@ -98,7 +98,11 @@ const marvel = {
         // Code to add thumbnails to comics
         {
             for (let index = 0; index < comicThumbnailsURI.length; index++) {
-                const comicSelected = `${comicThumbnailsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                let comicSelected = `${comicThumbnailsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                if (comicSelected.startsWith('http://')) {
+                    comicSelected = `https${comicSelected.slice(4)}`
+                }
+                console.log(comicSelected)
                 const response = await fetch(comicSelected)
                 const json = await response.json()
                 func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
@@ -108,7 +112,11 @@ const marvel = {
         // Code to add thumbanails to series
         {
             for (let index = 0; index < seriesThumbnailsURI.length; index++) {
-                const seriesSelected = `${seriesThumbnailsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                let seriesSelected = `${seriesThumbnailsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                if (seriesSelected.startsWith('http://')) {
+                    seriesSelected = `https${seriesSelected.slice(4)}`
+                }
+                console.log(seriesSelected)
                 const response = await fetch(seriesSelected)
                 const json = await response.json()
                 func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
