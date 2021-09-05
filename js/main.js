@@ -35,6 +35,8 @@ const marvel = {
         const heroSelected = await json.data.results[0]
 
         let comicThumbnailsURI = []
+        let seriesThumbnailsURI = []
+        let storiesURI = []
         
         //Code to create page of character
         {
@@ -57,10 +59,39 @@ const marvel = {
                 const comicFound = heroSelected.comics.items[index];
                 let tempNode = comicRailTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
-                htmlNode.querySelector('.comic_container__name').textContent = comicFound.name
+                htmlNode.querySelector('.comic_container__name').textContent = (comicFound.name.length > 30) ? `${comicFound.name.slice(0,30)} ...` : `${comicFound.name}`
                 htmlNode.querySelector('.comic_container__thumbnail').setAttribute("id", `comicPicture${index}`)
                 comicThumbnailsURI.push(comicFound.resourceURI)
                 comicsRail.appendChild(htmlNode)
+            }
+        }
+
+        // Code to create list of series
+        {
+            const seriesRailTemplate = document.getElementById('seriesRailTemplate')
+            const seriesRail = document.getElementById('seriesRail')
+            for (let index = 0; index < heroSelected.series.items.length; index++) {
+                const seriesFound = heroSelected.series.items[index];
+                let tempNode = seriesRailTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.series_container__name').textContent = (seriesFound.name.length > 30) ? `${seriesFound.name.slice(0,30)} ...` : `${seriesFound.name}`
+                htmlNode.querySelector('.series_container__thumbnail').setAttribute("id", `seriesPicture${index}`)
+                seriesThumbnailsURI.push(seriesFound.resourceURI)
+                seriesRail.appendChild(htmlNode)
+            }
+        }
+
+        // Code to create list of stories
+        {
+            const storiesListTemplate = document.getElementById('storiesListTemplate')
+            const storiesList = document.getElementById('storiesList')
+            for (let index = 0; index < heroSelected.stories.items.length; index++) {
+                const storiesFound = heroSelected.stories.items[index];
+                let tempNode = storiesListTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.stories_container__name').textContent = (storiesFound.name.length > 30) ? `${storiesFound.name.slice(0,30)} ...` : `${storiesFound.name}`
+                storiesURI.push(storiesFound.resourceURI)
+                storiesList.appendChild(htmlNode)
             }
         }
         
@@ -71,6 +102,16 @@ const marvel = {
                 const response = await fetch(comicSelected)
                 const json = await response.json()
                 func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+            }
+        }
+
+        // Code to add thumbanails to series
+        {
+            for (let index = 0; index < seriesThumbnailsURI.length; index++) {
+                const seriesSelected = `${seriesThumbnailsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                const response = await fetch(seriesSelected)
+                const json = await response.json()
+                func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
             }
         }
     },
