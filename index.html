@@ -33,6 +33,8 @@
 
     <!-- MAIN -->
     <main>
+
+        <!-- SEARCH CONTROL PANEL -->
         <div class="guidebook__control_panel">
             <h2 class="subtitle">Find a Marvel legend!</h2>
             <input id="searchHeroBar" class="control_panel__search_bar" type="text" name="">
@@ -41,6 +43,8 @@
                 <input id="findRandomButton" class="control_panel__button" type="button" value="Random search">
             </div>
         </div>
+        
+        <!-- SEARCH RESULTS CONTAINER -->
         <div id="characterSearchResults" class="guidebook__character_search_results">
             <template id="templateSearchResults">
                 <div id="resultID999" class="character_search_result__container">
@@ -49,6 +53,8 @@
                 </div>
             </template>
         </div>
+
+        <!-- CHARACTER INFO CONTAINER -->
         <div id='characterGalery' class="guidebook__character_galery">
             <template id="templateCharacterRender">
                 <div class="character_container">
@@ -90,6 +96,40 @@
                 </div>
             </template>
         </div>
+
+        <!-- COMIC INFO CONTAINER -->
+        <div id='comicGalery' class="guidebook__comic_galery">
+            <template id="templateComicRender">
+                <div class="character_container">
+                    <span id="comicName" class="comic_name">[COMIC NAME]</span>
+                    <img id="comicThumbnail" class="comic_thumbnail" src="https://via.placeholder.com/150" alt=""> 
+                    <p id="comicDescription" class="comic_description">[DESCRIPTION]</p>
+                    
+                    <h3 class="comicRender_title">Characters</h3>
+                    <div id="comicGalery-charactersRail" class="characters_rail">
+                        <template id="comicGalery_charactersRailTemplate">
+                            <div class="characters_container">
+                                <img id="charactersPicture00" class="characters_container__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="characters_container__name">[CHARACTER NAME]</span>
+                            </div>
+                        </template>
+                    </div> 
+                    
+                    <h3 class="comicRender_title">Creators</h3>
+                    
+                    
+                    <h3 class="comicRender_title">Series</h3>
+
+                    
+                    <h3 class="comicRender_title">Stories</h3>
+                    
+                    
+                    <h3 class="comicRender_title">More info</h3>
+                    
+                </div>
+            </template>
+        </div>
+
     </main>
 
     <!-- FOOTER -->
