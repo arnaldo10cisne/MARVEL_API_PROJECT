@@ -3,9 +3,6 @@ import * as func from './modules/functions.js'
 const searchHeroBar = document.getElementById('searchHeroBar')
 const searchButton = document.getElementById('searchButton')
 const findRandomButton = document.getElementById('findRandomButton')
-const charThumbnail = document.getElementById('charThumbnail')
-const charName = document.getElementById('charName')
-const charDescription = document.getElementById('charDescription')
 const characterGalery = document.getElementById('characterGalery')
 const comicGalery = document.getElementById('comicGalery')
 const characterSearchResults = document.getElementById('characterSearchResults')
@@ -162,6 +159,8 @@ const marvel = {
         const json = await response.json()    
         const comicSelected = await json.data.results[0]
 
+        let charactersThumbnailsURI = []
+
         // Code to render Comic information
         {
             cleanGuidebook()
@@ -177,23 +176,25 @@ const marvel = {
         // Code to create list of characters
         {
             const comicGalery_charactersRailTemplate = document.getElementById('comicGalery_charactersRailTemplate')
-            const comicsRail = document.getElementById('comicsRail')
-            for (let index = 0; index < heroSelected.comics.items.length; index++) {
-                const comicFound = heroSelected.comics.items[index];
-                let tempNode = comicRailTemplate.content
+            const comicGalery_charactersRail = document.getElementById('comicGalery_charactersRail')
+            for (let index = 0; index < comicSelected.characters.items.length; index++) {
+                const heroFound = comicSelected.characters.items[index];
+                let tempNode = comicGalery_charactersRailTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
-                htmlNode.querySelector('.card_rail_element__name').textContent = (comicFound.name.length > 30) ? `${comicFound.name.slice(0,30)} ...` : `${comicFound.name}`
-                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `comicPicture${index}`)
-                comicThumbnailsURI.push(comicFound.resourceURI)
-                comicsRail.appendChild(htmlNode)
-                func.$(`comicPicture${index}`).addEventListener("click" , async () => {
-                    let comicSelected = `${comicThumbnailsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                    if (comicSelected.startsWith('http://')) {
-                        comicSelected = `https${comicSelected.slice(4)}`
-                    }
-                    const response = await fetch(comicSelected)
-                    const json = await response.json()
-                    marvel.renderComic(json.data.results[0].id)
+                htmlNode.querySelector('.card_rail_element__name').textContent = (heroFound.name.length > 30) ? `${heroFound.name.slice(0,30)} ...` : `${heroFound.name}`
+                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `charactersPicture${index}`)
+                charactersThumbnailsURI.push(heroFound.resourceURI)
+                console.log(heroFound.resourceURI)
+                comicGalery_charactersRail.appendChild(htmlNode)
+                func.$(`charactersPicture${index}`).addEventListener("click" , async () => {
+                    // let heroSelected = `${charactersThumbnailsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    // if (heroSelected.startsWith('http://')) {
+                    //     heroSelected = `https${heroSelected.slice(4)}`
+                    // }
+                    // const response = await fetch(heroSelected)
+                    // const json = await response.json()
+                    // marvel.renderCharacter(json.data.results[0].name)
+                    marvel.renderCharacter(heroFound.name)
                 })
             }
         }
@@ -203,6 +204,11 @@ const marvel = {
 searchButton.addEventListener("click", ()=>{
     let hero = searchHeroBar.value
     marvel.createListOfCharacters(hero)
+})
+
+findRandomButton.addEventListener("click", ()=>{
+    //INCOMPLETE CODE
+    marvel.createListOfCharacters('a')
 })
 
 getAccessData()
