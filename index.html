@@ -57,42 +57,38 @@
         <!-- CHARACTER INFO CONTAINER -->
         <div id='characterGalery' class="guidebook__character_galery">
             <template id="templateCharacterRender">
-                <div class="character_container">
-                    <span id="charName" class="character_name">[HERO NAME]</span>
-                    <img id="charThumbnail" class="character_thumbnail" src="https://via.placeholder.com/150" alt=""> 
-                    <p id="charDescription" class="character_description">[DESCRIPTION]</p>
-                    <h3 class="characterRender_title">Comics</h3>
-                    <div id="comicsRail" class="comics_rail">
+                <div class="card_container">
+                    <span id="charName" class="card_title">[HERO NAME]</span>
+                    <img id="charThumbnail" class="card_thumbnail" src="https://via.placeholder.com/150" alt=""> 
+                    <p id="charDescription" class="card_description">[DESCRIPTION]</p>
+                    <h3 class="card_subtitle">Comics</h3>
+                    <div id="comicsRail" class="card_rail">
                         <template id="comicRailTemplate">
-                            <div class="comic_container">
-                                <img id="comicPicture00" class="comic_container__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
-                                <span class="comic_container__name">[COMIC NAME]</span>
+                            <div class="card_rail_element">
+                                <img id="comicPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[COMIC NAME]</span>
                             </div>
                         </template>
                     </div>
-                    <h3 class="characterRender_title">Series</h3>
-                    <div id="seriesRail" class="series_rail">
+                    <h3 class="card_subtitle">Series</h3>
+                    <div id="seriesRail" class="card_rail">
                         <template id="seriesRailTemplate">
-                            <div class="series_container">
-                                <img id="seriesPicture00" class="series_container__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
-                                <span class="series_container__name">[SERIES NAME]</span>
+                            <div class="card_rail_element">
+                                <img id="seriesPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[SERIES NAME]</span>
                             </div>
                         </template>
                     </div>
-                    <h3 class="characterRender_title">Stories</h3>
-                    <div id="storiesList" class="stories_list">
+                    <h3 class="card_subtitle">Stories</h3>
+                    <div id="storiesList" class="card_list">
                         <template id="storiesListTemplate">
-                            <div class="stories_container">
-                                <small class="stories_container__name">[Stories NAME]</small>
+                            <div class="card_list_element">
+                                <small class="card_list_element__name">[Stories NAME]</small>
                             </div>
                         </template>
                     </div>
-                    <h3 class="characterRender_title">More info</h3>
-                    <div class="moreInfo_rail">
-                        <template id="moreInfoRailTemplate">
-
-                        </template>
-                    </div>
+                    <h3 class="card_subtitle">More info</h3>
+                    
                 </div>
             </template>
         </div>
@@ -100,12 +96,12 @@
         <!-- COMIC INFO CONTAINER -->
         <div id='comicGalery' class="guidebook__comic_galery">
             <template id="templateComicRender">
-                <div class="character_container">
-                    <span id="comicName" class="comic_name">[COMIC NAME]</span>
-                    <img id="comicThumbnail" class="comic_thumbnail" src="https://via.placeholder.com/150" alt=""> 
-                    <p id="comicDescription" class="comic_description">[DESCRIPTION]</p>
+                <div class="card_container">
+                    <span id="comicName" class="card_title">[COMIC NAME]</span>
+                    <img id="comicThumbnail" class="card_thumbnail" src="https://via.placeholder.com/150" alt=""> 
+                    <p id="comicDescription" class="card_description">[DESCRIPTION]</p>
                     
-                    <h3 class="comicRender_title">Characters</h3>
+                    <h3 class="card_subtitle">Characters</h3>
                     <div id="comicGalery-charactersRail" class="characters_rail">
                         <template id="comicGalery_charactersRailTemplate">
                             <div class="characters_container">
@@ -115,16 +111,16 @@
                         </template>
                     </div> 
                     
-                    <h3 class="comicRender_title">Creators</h3>
+                    <h3 class="card_subtitle">Creators</h3>
                     
                     
-                    <h3 class="comicRender_title">Series</h3>
+                    <h3 class="card_subtitle">Series</h3>
 
                     
-                    <h3 class="comicRender_title">Stories</h3>
+                    <h3 class="card_subtitle">Stories</h3>
                     
                     
-                    <h3 class="comicRender_title">More info</h3>
+                    <h3 class="card_subtitle">More info</h3>
                     
                 </div>
             </template>

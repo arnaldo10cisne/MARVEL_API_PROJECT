@@ -70,9 +70,9 @@ const marvel = {
             console.log("HERO SELECTED: ", json)
             let tempNode = templateCharacterRender.content
             let htmlNode = document.importNode(tempNode,true)
-            htmlNode.querySelector('.character_name').textContent = heroSelected.name
-            htmlNode.querySelector('.character_thumbnail').setAttribute("src", `${heroSelected.thumbnail.path}.${heroSelected.thumbnail.extension}`)
-            htmlNode.querySelector('.character_description').textContent = heroSelected.description
+            htmlNode.querySelector('.card_title').textContent = heroSelected.name
+            htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${heroSelected.thumbnail.path}.${heroSelected.thumbnail.extension}`)
+            htmlNode.querySelector('.card_description').textContent = heroSelected.description
             characterGalery.appendChild(htmlNode)
         }
 
@@ -84,8 +84,8 @@ const marvel = {
                 const comicFound = heroSelected.comics.items[index];
                 let tempNode = comicRailTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
-                htmlNode.querySelector('.comic_container__name').textContent = (comicFound.name.length > 30) ? `${comicFound.name.slice(0,30)} ...` : `${comicFound.name}`
-                htmlNode.querySelector('.comic_container__thumbnail').setAttribute("id", `comicPicture${index}`)
+                htmlNode.querySelector('.card_rail_element__name').textContent = (comicFound.name.length > 30) ? `${comicFound.name.slice(0,30)} ...` : `${comicFound.name}`
+                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `comicPicture${index}`)
                 comicThumbnailsURI.push(comicFound.resourceURI)
                 comicsRail.appendChild(htmlNode)
                 func.$(`comicPicture${index}`).addEventListener("click" , async () => {
@@ -108,8 +108,8 @@ const marvel = {
                 const seriesFound = heroSelected.series.items[index];
                 let tempNode = seriesRailTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
-                htmlNode.querySelector('.series_container__name').textContent = (seriesFound.name.length > 30) ? `${seriesFound.name.slice(0,30)} ...` : `${seriesFound.name}`
-                htmlNode.querySelector('.series_container__thumbnail').setAttribute("id", `seriesPicture${index}`)
+                htmlNode.querySelector('.card_rail_element__name').textContent = (seriesFound.name.length > 30) ? `${seriesFound.name.slice(0,30)} ...` : `${seriesFound.name}`
+                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `seriesPicture${index}`)
                 seriesThumbnailsURI.push(seriesFound.resourceURI)
                 seriesRail.appendChild(htmlNode)
             }
@@ -123,7 +123,7 @@ const marvel = {
                 const storiesFound = heroSelected.stories.items[index];
                 let tempNode = storiesListTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
-                htmlNode.querySelector('.stories_container__name').textContent = (storiesFound.name.length > 30) ? `${storiesFound.name.slice(0,30)} ...` : `${storiesFound.name}`
+                htmlNode.querySelector('.card_list_element__name').textContent = (storiesFound.name.length > 30) ? `${storiesFound.name.slice(0,30)} ...` : `${storiesFound.name}`
                 storiesURI.push(storiesFound.resourceURI)
                 storiesList.appendChild(htmlNode)
             }
@@ -168,35 +168,35 @@ const marvel = {
             console.log('COMIC SELECTED: ', json)
             let tempNode = templateComicRender.content
             let htmlNode = document.importNode(tempNode,true)
-            htmlNode.querySelector('.comic_name').textContent = comicSelected.title
-            htmlNode.querySelector('.comic_thumbnail').setAttribute("src", `${comicSelected.thumbnail.path}.${comicSelected.thumbnail.extension}`)
-            htmlNode.querySelector('.comic_description').textContent = comicSelected.description
+            htmlNode.querySelector('.card_title').textContent = comicSelected.title
+            htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${comicSelected.thumbnail.path}.${comicSelected.thumbnail.extension}`)
+            htmlNode.querySelector('.card_description').textContent = comicSelected.description
             comicGalery.appendChild(htmlNode)
         }
 
         // Code to create list of characters
-        // {
-        //     const comicGalery_charactersRailTemplate = document.getElementById('comicGalery_charactersRailTemplate')
-        //     const comicsRail = document.getElementById('comicsRail')
-        //     for (let index = 0; index < heroSelected.comics.items.length; index++) {
-        //         const comicFound = heroSelected.comics.items[index];
-        //         let tempNode = comicRailTemplate.content
-        //         let htmlNode = document.importNode(tempNode,true)
-        //         htmlNode.querySelector('.comic_container__name').textContent = (comicFound.name.length > 30) ? `${comicFound.name.slice(0,30)} ...` : `${comicFound.name}`
-        //         htmlNode.querySelector('.comic_container__thumbnail').setAttribute("id", `comicPicture${index}`)
-        //         comicThumbnailsURI.push(comicFound.resourceURI)
-        //         comicsRail.appendChild(htmlNode)
-        //         func.$(`comicPicture${index}`).addEventListener("click" , async () => {
-        //             let comicSelected = `${comicThumbnailsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-        //             if (comicSelected.startsWith('http://')) {
-        //                 comicSelected = `https${comicSelected.slice(4)}`
-        //             }
-        //             const response = await fetch(comicSelected)
-        //             const json = await response.json()
-        //             marvel.renderComic(json.data.results[0].id)
-        //         })
-        //     }
-        // }
+        {
+            const comicGalery_charactersRailTemplate = document.getElementById('comicGalery_charactersRailTemplate')
+            const comicsRail = document.getElementById('comicsRail')
+            for (let index = 0; index < heroSelected.comics.items.length; index++) {
+                const comicFound = heroSelected.comics.items[index];
+                let tempNode = comicRailTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.card_rail_element__name').textContent = (comicFound.name.length > 30) ? `${comicFound.name.slice(0,30)} ...` : `${comicFound.name}`
+                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `comicPicture${index}`)
+                comicThumbnailsURI.push(comicFound.resourceURI)
+                comicsRail.appendChild(htmlNode)
+                func.$(`comicPicture${index}`).addEventListener("click" , async () => {
+                    let comicSelected = `${comicThumbnailsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (comicSelected.startsWith('http://')) {
+                        comicSelected = `https${comicSelected.slice(4)}`
+                    }
+                    const response = await fetch(comicSelected)
+                    const json = await response.json()
+                    marvel.renderComic(json.data.results[0].id)
+                })
+            }
+        }
     },
 }
 
