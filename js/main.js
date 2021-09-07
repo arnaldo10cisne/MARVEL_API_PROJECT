@@ -160,6 +160,7 @@ const marvel = {
         const comicSelected = await json.data.results[0]
 
         let charactersThumbnailsURI = []
+        let creatorsURI = []
 
         // Code to render Comic information
         {
@@ -184,20 +185,46 @@ const marvel = {
                 htmlNode.querySelector('.card_rail_element__name').textContent = (heroFound.name.length > 30) ? `${heroFound.name.slice(0,30)} ...` : `${heroFound.name}`
                 htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `charactersPicture${index}`)
                 charactersThumbnailsURI.push(heroFound.resourceURI)
-                console.log(heroFound.resourceURI)
                 comicGalery_charactersRail.appendChild(htmlNode)
                 func.$(`charactersPicture${index}`).addEventListener("click" , async () => {
-                    // let heroSelected = `${charactersThumbnailsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                    // if (heroSelected.startsWith('http://')) {
-                    //     heroSelected = `https${heroSelected.slice(4)}`
-                    // }
-                    // const response = await fetch(heroSelected)
-                    // const json = await response.json()
-                    // marvel.renderCharacter(json.data.results[0].name)
                     marvel.renderCharacter(heroFound.name)
                 })
             }
         }
+
+        // Code to create list of creators
+        {
+            const comicGalery_creatorsListTemplate = document.getElementById('comicGalery_creatorsListTemplate')
+            const comicGalery_creatorsList = document.getElementById('comicGalery_creatorsList')
+            for (let index = 0; index < comicSelected.creators.items.length; index++) {
+                const creatorFound = comicSelected.creators.items[index];
+                let tempNode = comicGalery_creatorsListTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.card_list_element__name').textContent = (creatorFound.name.length > 30) ? `${creatorFound.name.slice(0,30)} ...` : `${creatorFound.name}`
+                creatorsURI.push(creatorFound.resourceURI)
+                console.log(creatorFound.resourceURI)
+                comicGalery_creatorsList.appendChild(htmlNode)
+                // func.$(`creatorsPicture${index}`).addEventListener("click" , async () => {
+                //     marvel.renderCreators(creators.name)
+                // })
+            }
+        }
+
+        // Code to add thumbnails to characters
+        {
+            for (let index = 0; index < charactersThumbnailsURI.length; index++) {
+                let characterSelected = `${charactersThumbnailsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                if (characterSelected.startsWith('http://')) {
+                    characterSelected = `https${characterSelected.slice(4)}`
+                }
+                const response = await fetch(characterSelected)
+                const json = await response.json()
+                func.$(`charactersPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+            }
+        }
+    },
+    renderCreators: async (name) =>{
+        console.log('RENDERCREATORS NOT READY')
     },
 }
 

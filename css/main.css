@@ -66,6 +66,7 @@ header {
 
     background-color: rgb(122, 0, 0);
     background-image: url('https://i.gifer.com/Xni5.gif');
+    background-size: contain;
 }
 .title {
     color: white;
@@ -80,12 +81,8 @@ header {
     font-weight: 100;
     line-height: 25px;
     padding: 45px 0 20px;
-    background-color: rgba(0, 0, 0, 0.938);
+    background-color: rgba(78, 0, 0, 0.658);
     transition: 0.2s background-color;
-}
-.title:hover {
-    background-color: rgba(0, 0, 0, 0.288);
-    -webkit-text-stroke: 2px black;
 }
 .title > span {
     font-size: 3rem;
