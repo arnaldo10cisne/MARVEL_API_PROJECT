@@ -54,7 +54,7 @@
             </template>
         </div>
 
-        <!-- CHARACTER INFO CONTAINER -->
+        <!-- CHARACTER CARD CONTAINER -->
         <div id='characterGalery' class="guidebook__character_galery">
             <template id="templateCharacterRender">
                 <div class="card_container">
@@ -63,8 +63,8 @@
                     <p class="card_description">[DESCRIPTION]</p>
                     
                     <h3 class="card_subtitle">Comics</h3>
-                    <div id="comicsRail" class="card_rail">
-                        <template id="comicRailTemplate">
+                    <div id="charactersGalery_comicsRail" class="card_rail">
+                        <template id="charactersGalery_comicRailTemplate">
                             <div class="card_rail_element">
                                 <img id="comicPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
@@ -73,8 +73,8 @@
                     </div>
 
                     <h3 class="card_subtitle">Series</h3>
-                    <div id="seriesRail" class="card_rail">
-                        <template id="seriesRailTemplate">
+                    <div id="charactersGalery_seriesRail" class="card_rail">
+                        <template id="charactersGalery_seriesRailTemplate">
                             <div class="card_rail_element">
                                 <img id="seriesPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
                                 <span class="card_rail_element__name">[SERIES NAME]</span>
@@ -83,8 +83,8 @@
                     </div>
 
                     <h3 class="card_subtitle">Stories</h3>
-                    <div id="storiesList" class="card_list">
-                        <template id="storiesListTemplate">
+                    <div id="charactersGalery_storiesList" class="card_list">
+                        <template id="charactersGalery_storiesListTemplate">
                             <div class="card_list_element">
                                 <small class="card_list_element__name">[Stories NAME]</small>
                             </div>
@@ -97,7 +97,7 @@
             </template>
         </div>
 
-        <!-- COMIC INFO CONTAINER -->
+        <!-- COMIC CARD CONTAINER -->
         <div id='comicGalery' class="guidebook__comic_galery">
             <template id="templateComicRender">
                 <div class="card_container">
@@ -150,7 +150,7 @@
             </template>
         </div>
 
-        <!-- SERIES INFO CONTAINER -->
+        <!-- SERIES CARD CONTAINER -->
         <div id='seriesGalery' class="guidebook__series_galery">
             <template id="templateSeriesRender">
                 <div class="card_container">
@@ -192,6 +192,121 @@
                         <template id="seriesGalery_storiesListTemplate">
                             <div class="card_list_element">
                                 <small class="card_list_element__name">[Stories NAME]</small>
+                            </div>
+                        </template>
+                    </div>
+
+                    <h3 class="card_subtitle">Events</h3>
+                    <div id="seriesGalery_eventsRail" class="card_rail">
+                        <template id="seriesGalery_eventsRailTemplate">
+                            <div class="card_rail_element">
+                                <img id="eventsPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[COMIC NAME]</span>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">More info</h3>
+                    
+                </div>
+            </template>
+        </div>
+
+        <!-- EVENTS CARD CONTAINER -->
+        <div id='eventsGalery' class="guidebook__events_galery">
+            <template id="templateEventsRender">
+                <div class="card_container">
+                    <span class="card_title">[EVENT NAME]</span>
+                    <img class="card_thumbnail" src="https://via.placeholder.com/150" alt=""> 
+                    <p class="card_description">[DESCRIPTION]</p>
+                    
+                    <h3 class="card_subtitle">Characters</h3>
+                    <div id="eventsGalery_charactersRail" class="card_rail">
+                        <template id="eventsGalery_charactersRailTemplate">
+                            <div class="card_rail_element">
+                                <img id="charactersPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[CHARACTER NAME]</span>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">Creators</h3>
+                    <div id="eventsGalery_creatorsList" class="card_list">
+                        <template id="eventsGalery_creatorsListTemplate">
+                            <div class="card_list_element">
+                                <small class="card_list_element__name">[Stories NAME]</small>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">Comics</h3>
+                    <div id="eventsGalery_comicRail" class="card_rail">
+                        <template id="eventsGalery_comicRailTemplate">
+                            <div class="card_rail_element">
+                                <img id="comicPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[COMIC NAME]</span>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">Stories</h3>
+                    <div id="eventsGalery_storiesList" class="card_list">
+                        <template id="eventsGalery_storiesListTemplate">
+                            <div class="card_list_element">
+                                <small class="card_list_element__name">[Stories NAME]</small>
+                            </div>
+                        </template>
+                    </div>
+
+                    <h3 class="card_subtitle">Series</h3>
+                    <div id="eventsGalery_seriesRail" class="card_rail">
+                        <template id="eventsGalery_seriesRailTemplate">
+                            <div class="card_rail_element">
+                                <img id="seriesPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[COMIC NAME]</span>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">More info</h3>
+                    
+                </div>
+            </template>
+        </div>
+
+        <!-- CREATOR CARD CONTAINER -->
+        <div id='eventsGalery' class="guidebook__events_galery">
+            <template id="templateEventsRender">
+                <div class="card_container">
+                    <span class="card_title">[EVENT NAME]</span>
+                    <img class="card_thumbnail" src="https://via.placeholder.com/150" alt=""> 
+                    <p class="card_description">[DESCRIPTION]</p>
+                    
+                    <h3 class="card_subtitle">Comics</h3>
+                    <div id="eventsGalery_comicRail" class="card_rail">
+                        <template id="eventsGalery_comicRailTemplate">
+                            <div class="card_rail_element">
+                                <img id="comicPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[COMIC NAME]</span>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">Stories</h3>
+                    <div id="eventsGalery_storiesList" class="card_list">
+                        <template id="eventsGalery_storiesListTemplate">
+                            <div class="card_list_element">
+                                <small class="card_list_element__name">[Stories NAME]</small>
+                            </div>
+                        </template>
+                    </div>
+
+                    <h3 class="card_subtitle">Series</h3>
+                    <div id="eventsGalery_seriesRail" class="card_rail">
+                        <template id="eventsGalery_seriesRailTemplate">
+                            <div class="card_rail_element">
+                                <img id="seriesPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[COMIC NAME]</span>
                             </div>
                         </template>
                     </div>
