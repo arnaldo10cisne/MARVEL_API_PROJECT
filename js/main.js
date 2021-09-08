@@ -11,6 +11,7 @@ const templateCharacterRender = document.getElementById('templateCharacterRender
 const templateComicRender = document.getElementById('templateComicRender')
 const templateSeriesRender = document.getElementById('templateSeriesRender')
 const templateEventsRender = document.getElementById('templateEventsRender')
+const templateCreatorsRender = document.getElementById('templateCreatorsRender')
 
 let ACCESSDATA
 
@@ -26,6 +27,7 @@ const cleanGuidebook = () => {
     comicGalery.innerHTML = ""
     seriesGalery.innerHTML = ""
     eventsGalery.innerHTML = ""
+    creatorsGalery.innerHTML = ""
 }
 
 const marvel = {
@@ -56,6 +58,7 @@ const marvel = {
         }
     },
     renderCharacter: async (name) => {
+        
         const URLAPI = `https://gateway.marvel.com:443/v1/public/characters?${ACCESSDATA.tsAccess}&name=${name}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
         const response = await fetch(URLAPI)
         const json = await response.json()    
@@ -216,11 +219,19 @@ const marvel = {
                 let tempNode = comicGalery_creatorsListTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
                 htmlNode.querySelector('.card_list_element__name').textContent = (creatorFound.name.length > 30) ? `${creatorFound.name.slice(0,30)} ...` : `${creatorFound.name}`
+                htmlNode.querySelector('.card_list_element__name').setAttribute("id", `creatorsLink${index}`)
                 creatorsURI.push(creatorFound.resourceURI)
                 comicGalery_creatorsList.appendChild(htmlNode)
-                // func.$(`creatorsPicture${index}`).addEventListener("click" , async () => {
-                //     marvel.renderCreators(creators.name)
-                // })
+                
+                func.$(`creatorsLink${index}`).addEventListener("click" , async () => {
+                    let creatorSelected = `${creatorsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (creatorSelected.startsWith('http://')) {
+                        creatorSelected = `https${creatorSelected.slice(4)}`
+                    }
+                    const response = await fetch(creatorSelected)
+                    const json = await response.json()
+                    marvel.renderCreators(json.data.results[0].id)
+                })
             }
         }
 
@@ -239,7 +250,11 @@ const marvel = {
             }
             comicGalery_seriesRail.appendChild(htmlNode)
             func.$('seriesPicture').addEventListener("click", async () => {
-                const response = await fetch(`${seriesURI}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`)
+                let seriesSelected = `${seriesURI}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                if (seriesSelected.startsWith('http://')) {
+                    seriesSelected = `https${seriesSelected.slice(4)}`
+                }
+                const response = await fetch(seriesSelected)
                 const json = await response.json()
                 marvel.renderSeries(json.data.results[0].id)
             })
@@ -283,8 +298,155 @@ const marvel = {
             func.$(`seriesPicture`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
         }
     },
-    renderCreators: async (name) =>{
-        console.log('renderCreators NOT READY')
+    renderCreators: async (id) =>{
+        
+        const URLAPI = `https://gateway.marvel.com:443/v1/public/creators/${id}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+        const response = await fetch(URLAPI)
+        const json = await response.json()    
+        const creatorSelected = await json.data.results[0]
+
+        let comicURI = []
+        let eventsURI = []
+        let storiesURI = []
+        let seriesURI = []
+
+        //Code to render Creator information
+        {
+            cleanGuidebook()
+            console.log('CREATOR SELECTED: ', json)
+            let tempNode = templateCreatorsRender.content
+            let htmlNode = document.importNode(tempNode,true)
+            htmlNode.querySelector('.card_title').textContent = creatorSelected.fullName
+            htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${creatorSelected.thumbnail.path}.${creatorSelected.thumbnail.extension}`)
+            htmlNode.querySelector('.card_description').textContent = creatorSelected.description
+            seriesGalery.appendChild(htmlNode)
+        }
+
+        // Code to create list of comics
+        {
+            const creatorsGalery_comicsRailTemplate = document.getElementById('creatorsGalery_comicsRailTemplate')
+            const creatorsGalery_comicsRail = document.getElementById('creatorsGalery_comicsRail')
+            for (let index = 0; index < creatorSelected.comics.items.length; index++) {
+                const comicFound = creatorSelected.comics.items[index];
+                let tempNode = creatorsGalery_comicsRailTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.card_rail_element__name').textContent = (comicFound.name.length > 30) ? `${comicFound.name.slice(0,30)} ...` : `${comicFound.name}`
+                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `comicPicture${index}`)
+                comicURI.push(comicFound.resourceURI)
+                creatorsGalery_comicsRail.appendChild(htmlNode)
+                func.$(`comicPicture${index}`).addEventListener("click" , async () => {
+                    let comicSelected = `${comicURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (comicSelected.startsWith('http://')) {
+                        comicSelected = `https${comicSelected.slice(4)}`
+                    }
+                    const response = await fetch(comicSelected)
+                    const json = await response.json()
+                    marvel.renderComic(json.data.results[0].id)
+                })
+            }
+        }
+
+        // Code to create list of series
+        {
+            const creatorsGalery_seriesRailTemplate = document.getElementById('creatorsGalery_seriesRailTemplate')
+            const creatorsGalery_seriesRail = document.getElementById('creatorsGalery_seriesRail')
+            for (let index = 0; index < creatorSelected.series.items.length; index++) {
+                const seriesFound = creatorSelected.series.items[index];
+                let tempNode = creatorsGalery_seriesRailTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.card_rail_element__name').textContent = (seriesFound.name.length > 30) ? `${seriesFound.name.slice(0,30)} ...` : `${seriesFound.name}`
+                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `seriesPicture${index}`)
+                seriesURI.push(seriesFound.resourceURI)
+                creatorsGalery_seriesRail.appendChild(htmlNode)
+                func.$(`seriesPicture${index}`).addEventListener("click" , async () => {
+                    let seriesSelected = `${seriesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (seriesSelected.startsWith('http://')) {
+                        seriesSelected = `https${seriesSelected.slice(4)}`
+                    }
+                    const response = await fetch(seriesSelected)
+                    const json = await response.json()
+                    marvel.renderSeries(json.data.results[0].id)
+                })
+            }
+        }
+
+        // Code to create list of stories
+        {
+            const creatorsGalery_storiesListTemplate = document.getElementById('creatorsGalery_storiesListTemplate')
+            const creatorsGalery_storiesList = document.getElementById('creatorsGalery_storiesList')
+            for (let index = 0; index < creatorSelected.stories.items.length; index++) {
+                const storiesFound = creatorSelected.stories.items[index];
+                let tempNode = creatorsGalery_storiesListTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.card_list_element__name').textContent = (storiesFound.name.length > 30) ? `${storiesFound.name.slice(0,30)} ...` : `${storiesFound.name}`
+                storiesURI.push(storiesFound.resourceURI)
+                creatorsGalery_storiesList.appendChild(htmlNode)
+            }
+        }
+
+        // Code to create list of events
+        {
+            const creatorsGalery_eventsRailTemplate = document.getElementById('creatorsGalery_eventsRailTemplate')
+            const creatorsGalery_eventsRail = document.getElementById('creatorsGalery_eventsRail')
+            for (let index = 0; index < creatorSelected.events.items.length; index++) {
+                const eventFound = creatorSelected.events.items[index];
+                let tempNode = creatorsGalery_eventsRailTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.card_rail_element__name').textContent = (eventFound.name.length > 30) ? `${eventFound.name.slice(0,30)} ...` : `${eventFound.name}`
+                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `eventsPicture${index}`)
+                eventsURI.push(eventFound.resourceURI)
+                creatorsGalery_eventsRail.appendChild(htmlNode)
+                func.$(`eventsPicture${index}`).addEventListener("click" , async () => {
+                    let eventsSelected = `${eventsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (eventsSelected.startsWith('http://')) {
+                        eventsSelected = `https${eventsSelected.slice(4)}`
+                    }
+                    const response = await fetch(eventsSelected)
+                    const json = await response.json()
+                    marvel.renderEvents(json.data.results[0].id)
+                })
+            }
+        }
+        
+        // Code to add thumbnails to comics
+        {
+            for (let index = 0; index < comicURI.length; index++) {
+                let comicSelected = `${comicURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                if (comicSelected.startsWith('http://')) {
+                    comicSelected = `https${comicSelected.slice(4)}`
+                }
+                const response = await fetch(comicSelected)
+                const json = await response.json()
+                func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+            }
+        }
+
+        // Code to add thumbanails to series
+        {
+            for (let index = 0; index < seriesURI.length; index++) {
+                let seriesSelected = `${seriesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                if (seriesSelected.startsWith('http://')) {
+                    seriesSelected = `https${seriesSelected.slice(4)}`
+                }
+                const response = await fetch(seriesSelected)
+                const json = await response.json()
+                func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+            }
+        }
+
+        // Code to add thumbnails to events
+        {
+            for (let index = 0; index < eventsURI.length; index++) {
+                let eventsSelected = `${eventsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                if (eventsSelected.startsWith('http://')) {
+                    eventsSelected = `https${eventsSelected.slice(4)}`
+                }
+                const response = await fetch(eventsSelected)
+                const json = await response.json()
+                func.$(`eventsPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+            }
+        }
+
     },
     renderSeries: async(id) =>{
         
@@ -338,11 +500,18 @@ const marvel = {
                 let tempNode = seriesGalery_creatorsListTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
                 htmlNode.querySelector('.card_list_element__name').textContent = (creatorFound.name.length > 30) ? `${creatorFound.name.slice(0,30)} ...` : `${creatorFound.name}`
+                htmlNode.querySelector('.card_list_element__name').setAttribute("id", `creatorsLink${index}`)
                 creatorsURI.push(creatorFound.resourceURI)
                 seriesGalery_creatorsList.appendChild(htmlNode)
-                // func.$(`creatorsPicture${index}`).addEventListener("click" , async () => {
-                //     marvel.renderCreators(creators.name)
-                // })
+                func.$(`creatorsLink${index}`).addEventListener("click" , async () => {
+                    let creatorSelected = `${creatorsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (creatorSelected.startsWith('http://')) {
+                        creatorSelected = `https${creatorSelected.slice(4)}`
+                    }
+                    const response = await fetch(creatorSelected)
+                    const json = await response.json()
+                    marvel.renderCreators(json.data.results[0].id)
+                })
             }
         }
 
@@ -447,7 +616,7 @@ const marvel = {
             }
         }
     },
-    renderStories: async (name) =>{
+    renderStories: async (id) =>{
         console.log('renderStories NOT READY')
     },
     renderEvents: async (id) =>{
@@ -502,11 +671,18 @@ const marvel = {
                 let tempNode = eventsGalery_creatorsListTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
                 htmlNode.querySelector('.card_list_element__name').textContent = (creatorFound.name.length > 30) ? `${creatorFound.name.slice(0,30)} ...` : `${creatorFound.name}`
+                htmlNode.querySelector('.card_list_element__name').setAttribute("id", `creatorsLink${index}`)
                 creatorsURI.push(creatorFound.resourceURI)
                 eventsGalery_creatorsList.appendChild(htmlNode)
-                // func.$(`creatorsPicture${index}`).addEventListener("click" , async () => {
-                //     marvel.renderCreators(creators.name)
-                // })
+                func.$(`creatorsLink${index}`).addEventListener("click" , async () => {
+                    let creatorSelected = `${creatorsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (creatorSelected.startsWith('http://')) {
+                        creatorSelected = `https${creatorSelected.slice(4)}`
+                    }
+                    const response = await fetch(creatorSelected)
+                    const json = await response.json()
+                    marvel.renderCreators(json.data.results[0].id)
+                })
             }
         }
 
