@@ -1,36 +1,10 @@
 import * as func from './modules/functions.js'
-
-const searchHeroBar = document.getElementById('searchHeroBar')
-const searchButton = document.getElementById('searchButton')
-const findRandomButton = document.getElementById('findRandomButton')
-const characterGalery = document.getElementById('characterGalery')
-const comicGalery = document.getElementById('comicGalery')
-const characterSearchResults = document.getElementById('characterSearchResults')
-const templateSearchResults = document.getElementById('templateSearchResults')
-const templateCharacterRender = document.getElementById('templateCharacterRender')
-const templateComicRender = document.getElementById('templateComicRender')
-const templateSeriesRender = document.getElementById('templateSeriesRender')
-const templateEventsRender = document.getElementById('templateEventsRender')
-const templateCreatorsRender = document.getElementById('templateCreatorsRender')
-const templateStoriesRender = document.getElementById('templateStoriesRender')
+import * as elem from './modules/elements.js'
 
 let ACCESSDATA
-
-const getAccessData = async () => {
-    const response = await fetch("./js/json/APIaccessData.json")
-    const data = await response.json()
-    ACCESSDATA = data
-}
-
-const cleanGuidebook = () => {
-    characterSearchResults.innerHTML = ""
-    characterGalery.innerHTML = ""
-    comicGalery.innerHTML = ""
-    seriesGalery.innerHTML = ""
-    eventsGalery.innerHTML = ""
-    creatorsGalery.innerHTML = ""
-    storiesGalery.innerHTML = ""
-}
+(async () => {
+    ACCESSDATA = await func.getAccessData()
+})()
 
 const marvel = {
     createListOfCharacters: async (startsWith) => {
@@ -40,18 +14,18 @@ const marvel = {
         
         // Code to create list of possible choices
         {
-            cleanGuidebook()
+            func.cleanGuidebook()
             if (json.data.results.length == 1) {
                 marvel.renderCharacter(json.data.results[0].name)
             } else {
                 for (let index = 0; index < json.data.results.length; index++) {
                     const heroFound = json.data.results[index];
-                    let tempNode = templateSearchResults.content
+                    let tempNode = elem.templateSearchResults.content
                     let htmlNode = document.importNode(tempNode,true)
                     htmlNode.querySelector('.character_search_result__container__name').textContent = heroFound.name
                     htmlNode.querySelector('.character_search_result__picture').setAttribute("src", `${heroFound.thumbnail.path}.${heroFound.thumbnail.extension}`)
                     htmlNode.querySelector('.character_search_result__container').setAttribute("id", `resultID${index}`)
-                    characterSearchResults.appendChild(htmlNode)
+                    elem.characterSearchResults.appendChild(htmlNode)
                     func.$(`resultID${index}`).addEventListener("click" , () => {
                         marvel.renderCharacter(heroFound.name)
                     })
@@ -70,17 +44,7 @@ const marvel = {
         let seriesURI = []
         let storiesURI = []
         
-        //Code to create render and description of character
-        {
-            cleanGuidebook()
-            console.log("HERO SELECTED: ", json)
-            let tempNode = templateCharacterRender.content
-            let htmlNode = document.importNode(tempNode,true)
-            htmlNode.querySelector('.card_title').textContent = heroSelected.name
-            if (heroSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${heroSelected.thumbnail.path}.${heroSelected.thumbnail.extension}`)
-            htmlNode.querySelector('.card_description').textContent = heroSelected.description
-            characterGalery.appendChild(htmlNode)
-        }
+        func.renderMainInfo(elem.templateCharacterRender, heroSelected, elem.characterGalery, 1)
 
         // Code to create list of comics
         {
@@ -203,17 +167,7 @@ const marvel = {
         let storiesURI = []
         let seriesURI
 
-        // Code to render Comic information
-        {
-            cleanGuidebook()
-            console.log('COMIC SELECTED: ', json)
-            let tempNode = templateComicRender.content
-            let htmlNode = document.importNode(tempNode,true)
-            htmlNode.querySelector('.card_title').textContent = comicSelected.title
-            if (comicSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${comicSelected.thumbnail.path}.${comicSelected.thumbnail.extension}`)
-            htmlNode.querySelector('.card_description').textContent = comicSelected.description
-            comicGalery.appendChild(htmlNode)
-        }
+        func.renderMainInfo(elem.templateComicRender, comicSelected, elem.comicGalery, 3)
 
         // Code to create list of characters
         {
@@ -348,17 +302,7 @@ const marvel = {
         let storiesURI = []
         let seriesURI = []
 
-        //Code to render Creator information
-        {
-            cleanGuidebook()
-            console.log('CREATOR SELECTED: ', json)
-            let tempNode = templateCreatorsRender.content
-            let htmlNode = document.importNode(tempNode,true)
-            htmlNode.querySelector('.card_title').textContent = creatorSelected.fullName
-            if (creatorSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${creatorSelected.thumbnail.path}.${creatorSelected.thumbnail.extension}`)
-            htmlNode.querySelector('.card_description').textContent = creatorSelected.description
-            seriesGalery.appendChild(htmlNode)
-        }
+        func.renderMainInfo(elem.templateCreatorsRender, creatorSelected, elem.creatorsGalery, 2)
 
         // Code to create list of comics
         {
@@ -527,17 +471,7 @@ const marvel = {
         let comicURI = []
         let eventsURI = []
         
-        // Code to render Series information
-        {
-            cleanGuidebook()
-            console.log('SERIES SELECTED: ', json)
-            let tempNode = templateSeriesRender.content
-            let htmlNode = document.importNode(tempNode,true)
-            htmlNode.querySelector('.card_title').textContent = seriesSelected.title
-            if (seriesSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${seriesSelected.thumbnail.path}.${seriesSelected.thumbnail.extension}`)
-            htmlNode.querySelector('.card_description').textContent = seriesSelected.description
-            seriesGalery.appendChild(htmlNode)
-        }
+        func.renderMainInfo(elem.templateSeriesRender, seriesSelected, elem.seriesGalery, 3)
 
         // Code to create list of characters
         {
@@ -723,17 +657,7 @@ const marvel = {
         let comicURI = []
         let eventsURI = []
         
-        // Code to render Story information
-        {
-            cleanGuidebook()
-            console.log('STORIES SELECTED: ', json)
-            let tempNode = templateStoriesRender.content
-            let htmlNode = document.importNode(tempNode,true)
-            htmlNode.querySelector('.card_title').textContent = storiesSelected.title
-            if (storiesSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${storiesSelected.thumbnail.path}.${storiesSelected.thumbnail.extension}`)
-            htmlNode.querySelector('.card_description').textContent = storiesSelected.description
-            storiesGalery.appendChild(htmlNode)
-        }
+        func.renderMainInfo(elem.templateStoriesRender, storiesSelected, elem.storiesGalery, 3)
 
         // Code to create list of characters
         {
@@ -938,17 +862,7 @@ const marvel = {
         let comicURI = []
         let seriesURI = []
         
-        // Code to render Events information
-        {
-            cleanGuidebook()
-            console.log('EVENT SELECTED: ', json)
-            let tempNode = templateEventsRender.content
-            let htmlNode = document.importNode(tempNode,true)
-            htmlNode.querySelector('.card_title').textContent = eventsSelected.title
-            if (eventsSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${eventsSelected.thumbnail.path}.${eventsSelected.thumbnail.extension}`)
-            htmlNode.querySelector('.card_description').textContent = eventsSelected.description
-            eventsGalery.appendChild(htmlNode)
-        }
+        func.renderMainInfo(elem.templateEventsRender, eventsSelected, elem.eventsGalery, 3)
 
         // Code to create list of characters
         {
@@ -1123,14 +1037,12 @@ const marvel = {
     },
 }
 
-searchButton.addEventListener("click", ()=>{
-    let hero = searchHeroBar.value
+elem.searchButton.addEventListener("click", ()=>{
+    let hero = elem.searchHeroBar.value
     marvel.createListOfCharacters(hero)
 })
 
-findRandomButton.addEventListener("click", ()=>{
+elem.findRandomButton.addEventListener("click", ()=>{
     //INCOMPLETE CODE
     marvel.createListOfCharacters('a')
 })
-
-getAccessData()
