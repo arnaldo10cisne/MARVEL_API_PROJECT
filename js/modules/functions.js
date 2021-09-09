@@ -32,3 +32,19 @@ export const renderMainInfo = (template, elementSelected, cardGalery, nameType) 
     cardGalery.appendChild(htmlNode)
 }
 
+export const renderImages = async (dataURI, idImageContainer, ACCESSDATA) => {
+    for (let index = 0; index < dataURI.length; index++) {
+        let elementSelected = `${dataURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+        if (elementSelected.startsWith('http://')) {
+            elementSelected = `https${elementSelected.slice(4)}`
+        }
+        const response = await fetch(elementSelected)
+        const json = await response.json()
+        try {
+            $(`${idImageContainer}${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+        } catch (error) {
+            console.log('Thumbnail loading interrupted')
+            break;
+        }
+    }
+}

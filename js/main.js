@@ -118,42 +118,10 @@ const marvel = {
             }
         }
         
-        // Code to add thumbnails to comics
-        {
-            for (let index = 0; index < comicURI.length; index++) {
-                let comicSelected = `${comicURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (comicSelected.startsWith('http://')) {
-                    comicSelected = `https${comicSelected.slice(4)}`
-                }
-                const response = await fetch(comicSelected)
-                const json = await response.json()
-                try {
-                    func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-            }
-        }
+        func.renderImages(comicURI, 'comicPicture', ACCESSDATA)
 
-        // Code to add thumbanails to series
-        {
-            for (let index = 0; index < seriesURI.length; index++) {
-                let seriesSelected = `${seriesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (seriesSelected.startsWith('http://')) {
-                    seriesSelected = `https${seriesSelected.slice(4)}`
-                }
-                const response = await fetch(seriesSelected)
-                const json = await response.json()
-                try {
-                    func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
+        func.renderImages(seriesURI, 'seriesPicture', ACCESSDATA)
+        
     },
     renderComic: async (id) => {
 
@@ -261,18 +229,7 @@ const marvel = {
             }
         }
 
-        // Code to add thumbnails to characters
-        {
-            for (let index = 0; index < charactersURI.length; index++) {
-                let characterSelected = `${charactersURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (characterSelected.startsWith('http://')) {
-                    characterSelected = `https${characterSelected.slice(4)}`
-                }
-                const response = await fetch(characterSelected)
-                const json = await response.json()
-                func.$(`charactersPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-            }
-        }
+        func.renderImages(charactersURI, 'charactersPicture', ACCESSDATA)
 
         // Code to add thumbanails to series
         {
@@ -400,62 +357,11 @@ const marvel = {
             }
         }
         
-        // Code to add thumbnails to comics
-        {
-            for (let index = 0; index < comicURI.length; index++) {
-                let comicSelected = `${comicURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (comicSelected.startsWith('http://')) {
-                    comicSelected = `https${comicSelected.slice(4)}`
-                }
-                const response = await fetch(comicSelected)
-                const json = await response.json()
-                try {
-                    func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
+        func.renderImages(comicURI, 'comicPicture', ACCESSDATA)
 
-        // Code to add thumbanails to series
-        {
-            for (let index = 0; index < seriesURI.length; index++) {
-                let seriesSelected = `${seriesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (seriesSelected.startsWith('http://')) {
-                    seriesSelected = `https${seriesSelected.slice(4)}`
-                }
-                const response = await fetch(seriesSelected)
-                const json = await response.json()
-                try {
-                    func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
-
-        // Code to add thumbnails to events
-        {
-            for (let index = 0; index < eventsURI.length; index++) {
-                let eventsSelected = `${eventsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (eventsSelected.startsWith('http://')) {
-                    eventsSelected = `https${eventsSelected.slice(4)}`
-                }
-                const response = await fetch(eventsSelected)
-                const json = await response.json()
-                try {
-                    func.$(`eventsPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
+        func.renderImages(seriesURI, 'seriesPicture', ACCESSDATA)
+        
+        func.renderImages(eventsURI, 'eventsPicture', ACCESSDATA)
 
     },
     renderSeries: async(id) =>{
@@ -587,62 +493,11 @@ const marvel = {
             }
         }
 
-        // Code to add thumbnails to characters
-        {
-            for (let index = 0; index < charactersURI.length; index++) {
-                let characterSelected = `${charactersURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (characterSelected.startsWith('http://')) {
-                    characterSelected = `https${characterSelected.slice(4)}`
-                }
-                const response = await fetch(characterSelected)
-                const json = await response.json()
-                try {
-                    func.$(`charactersPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
+        func.renderImages(charactersURI, 'charactersPicture', ACCESSDATA)
 
-        // Code to add thumbnails to comics
-        {
-            for (let index = 0; index < comicURI.length; index++) {
-                let comicSelected = `${comicURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (comicSelected.startsWith('http://')) {
-                    comicSelected = `https${comicSelected.slice(4)}`
-                }
-                const response = await fetch(comicSelected)
-                const json = await response.json()
-                try {
-                    func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
+        func.renderImages(comicURI, 'comicPicture', ACCESSDATA)
 
-        // Code to add thumbnails to events
-        {
-            for (let index = 0; index < eventsURI.length; index++) {
-                let eventsSelected = `${eventsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (eventsSelected.startsWith('http://')) {
-                    eventsSelected = `https${eventsSelected.slice(4)}`
-                }
-                const response = await fetch(eventsSelected)
-                const json = await response.json()
-                try {
-                    func.$(`eventsPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
+        func.renderImages(eventsURI, 'eventsPicture', ACCESSDATA)
     },
     renderStories: async (id) =>{
         
@@ -773,81 +628,13 @@ const marvel = {
             }
         }
 
-        // Code to add thumbnails to characters
-        {
-            for (let index = 0; index < charactersURI.length; index++) {
-                let characterSelected = `${charactersURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (characterSelected.startsWith('http://')) {
-                    characterSelected = `https${characterSelected.slice(4)}`
-                }
-                const response = await fetch(characterSelected)
-                const json = await response.json()
-                try {
-                    func.$(`charactersPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
+        func.renderImages(charactersURI, 'charactersPicture', ACCESSDATA)
 
-        // Code to add thumbnails to comics
-        {
-            for (let index = 0; index < comicURI.length; index++) {
-                let comicSelected = `${comicURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (comicSelected.startsWith('http://')) {
-                    comicSelected = `https${comicSelected.slice(4)}`
-                }
-                const response = await fetch(comicSelected)
-                const json = await response.json()
-                try {
-                    func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
-
-        // Code to add thumbanails to series
-        {
-            for (let index = 0; index < seriesURI.length; index++) {
-                let seriesSelected = `${seriesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (seriesSelected.startsWith('http://')) {
-                    seriesSelected = `https${seriesSelected.slice(4)}`
-                }
-                const response = await fetch(seriesSelected)
-                const json = await response.json()
-                try {
-                    func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
-
-        // Code to add thumbnails to events
-        {
-            for (let index = 0; index < eventsURI.length; index++) {
-                let eventsSelected = `${eventsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (eventsSelected.startsWith('http://')) {
-                    eventsSelected = `https${eventsSelected.slice(4)}`
-                }
-                const response = await fetch(eventsSelected)
-                const json = await response.json()
-                try {
-                    func.$(`eventsPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
+        func.renderImages(comicURI, 'comicPicture', ACCESSDATA)
+    
+        func.renderImages(seriesURI, 'seriesPicture', ACCESSDATA)
+        
+        func.renderImages(eventsURI, 'eventsPicture', ACCESSDATA)
     },
     renderEvents: async (id) =>{
         
@@ -978,62 +765,11 @@ const marvel = {
             }
         }
 
-        // Code to add thumbnails to characters
-        {
-            for (let index = 0; index < charactersURI.length; index++) {
-                let characterSelected = `${charactersURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (characterSelected.startsWith('http://')) {
-                    characterSelected = `https${characterSelected.slice(4)}`
-                }
-                const response = await fetch(characterSelected)
-                const json = await response.json()
-                try {
-                    func.$(`charactersPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
+        func.renderImages(charactersURI, 'charactersPicture', ACCESSDATA)
 
-        // Code to add thumbnails to comics
-        {
-            for (let index = 0; index < comicURI.length; index++) {
-                let comicSelected = `${comicURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (comicSelected.startsWith('http://')) {
-                    comicSelected = `https${comicSelected.slice(4)}`
-                }
-                const response = await fetch(comicSelected)
-                const json = await response.json()
-                try {
-                    func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
+        func.renderImages(comicURI, 'comicPicture', ACCESSDATA)
 
-        // Code to add thumbanails to series
-        {
-            for (let index = 0; index < seriesURI.length; index++) {
-                let seriesSelected = `${seriesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (seriesSelected.startsWith('http://')) {
-                    seriesSelected = `https${seriesSelected.slice(4)}`
-                }
-                const response = await fetch(seriesSelected)
-                const json = await response.json()
-                try {
-                    func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-                } catch (error) {
-                    console.log('Thumbnail loading interrupted')
-                    break;
-                }
-                
-            }
-        }
+        func.renderImages(seriesURI, 'seriesPicture', ACCESSDATA)
     },
 }
 
