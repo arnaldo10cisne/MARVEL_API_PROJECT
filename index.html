@@ -86,7 +86,7 @@
                     <div id="charactersGalery_storiesList" class="card_list">
                         <template id="charactersGalery_storiesListTemplate">
                             <div class="card_list_element">
-                                <small class="card_list_element__name">[Stories NAME]</small>
+                                <small id="storiesLink00" class="card_list_element__name">[STORIES NAME]</small>
                             </div>
                         </template>
                     </div>
@@ -139,7 +139,7 @@
                     <div id="comicGalery_storiesList" class="card_list">
                         <template id="comicGalery_storiesListTemplate">
                             <div class="card_list_element">
-                                <small class="card_list_element__name">[Stories NAME]</small>
+                                <small id="storiesLink00" class="card_list_element__name">[STORIES NAME]</small>
                             </div>
                         </template>
                     </div>
@@ -172,7 +172,7 @@
                     <div id="seriesGalery_creatorsList" class="card_list">
                         <template id="seriesGalery_creatorsListTemplate">
                             <div class="card_list_element">
-                                <small id="creatorsLink00" class="card_list_element__name">[Stories NAME]</small>
+                                <small id="creatorsLink00" class="card_list_element__name">[CREATORS NAME]</small>
                             </div>
                         </template>
                     </div>
@@ -191,7 +191,7 @@
                     <div id="seriesGalery_storiesList" class="card_list">
                         <template id="seriesGalery_storiesListTemplate">
                             <div class="card_list_element">
-                                <small class="card_list_element__name">[Stories NAME]</small>
+                                <small id="storiesLink00" class="card_list_element__name">[STORIES NAME]</small>
                             </div>
                         </template>
                     </div>
@@ -234,7 +234,7 @@
                     <div id="eventsGalery_creatorsList" class="card_list">
                         <template id="eventsGalery_creatorsListTemplate">
                             <div class="card_list_element">
-                                <small id="creatorsLink00" class="card_list_element__name">[Stories NAME]</small>
+                                <small id="creatorsLink00" class="card_list_element__name">[CREATORS NAME]</small>
                             </div>
                         </template>
                     </div>
@@ -253,7 +253,7 @@
                     <div id="eventsGalery_storiesList" class="card_list">
                         <template id="eventsGalery_storiesListTemplate">
                             <div class="card_list_element">
-                                <small class="card_list_element__name">[Stories NAME]</small>
+                                <small id="storiesLink00" class="card_list_element__name">[STORIES NAME]</small>
                             </div>
                         </template>
                     </div>
@@ -274,15 +274,78 @@
             </template>
         </div>
 
+        <!-- STORIES CARD CONTAINER -->
+        <div id='storiesGalery' class="guidebook__stories_galery">
+            <template id="templateStoriesRender">
+                <div class="card_container">
+                    <span class="card_title">[STORY NAME]</span>
+                    <img class="card_thumbnail" src="https://via.placeholder.com/150" alt=""> 
+                    <p class="card_description">[DESCRIPTION]</p>
+                    
+                    <h3 class="card_subtitle">Characters</h3>
+                    <div id="storiesGalery_charactersRail" class="card_rail">
+                        <template id="storiesGalery_charactersRailTemplate">
+                            <div class="card_rail_element">
+                                <img id="charactersPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[CHARACTER NAME]</span>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">Events</h3>
+                    <div id="storiesGalery_eventsRail" class="card_rail">
+                        <template id="storiesGalery_eventsRailTemplate">
+                            <div class="card_rail_element">
+                                <img id="eventsPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[EVENT NAME]</span>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">Comics</h3>
+                    <div id="storiesGalery_comicRail" class="card_rail">
+                        <template id="storiesGalery_comicRailTemplate">
+                            <div class="card_rail_element">
+                                <img id="comicPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[COMIC NAME]</span>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">Creators</h3>
+                    <div id="storiesGalery_creatorsList" class="card_list">
+                        <template id="storiesGalery_creatorsListTemplate">
+                            <div class="card_list_element">
+                                <small id="creatorsLink00" class="card_list_element__name">[CREATORS NAME]</small>
+                            </div>
+                        </template>
+                    </div>
+
+                    <h3 class="card_subtitle">Series</h3>
+                    <div id="storiesGalery_seriesRail" class="card_rail">
+                        <template id="storiesGalery_seriesRailTemplate">
+                            <div class="card_rail_element">
+                                <img id="seriesPicture00" class="card_rail_element__thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[SERIES NAME]</span>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">More info</h3>
+                    
+                </div>
+            </template>
+        </div>
+
         <!-- CREATOR CARD CONTAINER -->
-        <div id='creatorsGalery' class="guidebook__events_galery">
+        <div id='creatorsGalery' class="guidebook__creators_galery">
             <template id="templateCreatorsRender">
                 <div class="card_container">
                     <span class="card_title">[EVENT NAME]</span>
                     <img class="card_thumbnail" src="https://via.placeholder.com/150" alt=""> 
                     <p class="card_description">[DESCRIPTION]</p>
                     
-                    <h3 class="card_subtitle">Comics</h3>
+                    <h3 class="card_subtitle">Comics TEST</h3>
                     <div id="creatorsGalery_comicsRail" class="card_rail">
                         <template id="creatorsGalery_comicsRailTemplate">
                             <div class="card_rail_element">
@@ -292,16 +355,16 @@
                         </template>
                     </div>
                     
-                    <h3 class="card_subtitle">Stories</h3>
+                    <h3 class="card_subtitle">Stories TEST</h3>
                     <div id="creatorsGalery_storiesList" class="card_list">
                         <template id="creatorsGalery_storiesListTemplate">
                             <div class="card_list_element">
-                                <small class="card_list_element__name">[Stories NAME]</small>
+                                <small id="storiesLink00" class="card_list_element__name">[STORIES NAME]</small>
                             </div>
                         </template>
                     </div>
 
-                    <h3 class="card_subtitle">Series</h3>
+                    <h3 class="card_subtitle">Series TEST</h3>
                     <div id="creatorsGalery_seriesRail" class="card_rail">
                         <template id="creatorsGalery_seriesRailTemplate">
                             <div class="card_rail_element">
@@ -311,7 +374,7 @@
                         </template>
                     </div>
 
-                    <h3 class="card_subtitle">Events</h3>
+                    <h3 class="card_subtitle">Events TEST</h3>
                     <div id="creatorsGalery_eventsRail" class="card_rail">
                         <template id="creatorsGalery_eventsRailTemplate">
                             <div class="card_rail_element">
@@ -326,6 +389,8 @@
                 </div>
             </template>
         </div>
+
+        
 
     </main>
 

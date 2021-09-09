@@ -12,6 +12,7 @@ const templateComicRender = document.getElementById('templateComicRender')
 const templateSeriesRender = document.getElementById('templateSeriesRender')
 const templateEventsRender = document.getElementById('templateEventsRender')
 const templateCreatorsRender = document.getElementById('templateCreatorsRender')
+const templateStoriesRender = document.getElementById('templateStoriesRender')
 
 let ACCESSDATA
 
@@ -28,6 +29,7 @@ const cleanGuidebook = () => {
     seriesGalery.innerHTML = ""
     eventsGalery.innerHTML = ""
     creatorsGalery.innerHTML = ""
+    storiesGalery.innerHTML = ""
 }
 
 const marvel = {
@@ -75,7 +77,7 @@ const marvel = {
             let tempNode = templateCharacterRender.content
             let htmlNode = document.importNode(tempNode,true)
             htmlNode.querySelector('.card_title').textContent = heroSelected.name
-            htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${heroSelected.thumbnail.path}.${heroSelected.thumbnail.extension}`)
+            if (heroSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${heroSelected.thumbnail.path}.${heroSelected.thumbnail.extension}`)
             htmlNode.querySelector('.card_description').textContent = heroSelected.description
             characterGalery.appendChild(htmlNode)
         }
@@ -137,8 +139,18 @@ const marvel = {
                 let tempNode = charactersGalery_storiesListTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
                 htmlNode.querySelector('.card_list_element__name').textContent = (storiesFound.name.length > 30) ? `${storiesFound.name.slice(0,30)} ...` : `${storiesFound.name}`
+                htmlNode.querySelector('.card_list_element__name').setAttribute("id", `storiesLink${index}`)
                 storiesURI.push(storiesFound.resourceURI)
                 charactersGalery_storiesList.appendChild(htmlNode)
+                func.$(`storiesLink${index}`).addEventListener("click" , async () => {
+                    let storiesSelected = `${storiesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (storiesSelected.startsWith('http://')) {
+                        storiesSelected = `https${storiesSelected.slice(4)}`
+                    }
+                    const response = await fetch(storiesSelected)
+                    const json = await response.json()
+                    marvel.renderStories(json.data.results[0].id)
+                })
             }
         }
         
@@ -151,7 +163,12 @@ const marvel = {
                 }
                 const response = await fetch(comicSelected)
                 const json = await response.json()
-                func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                try {
+                    func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
             }
         }
 
@@ -164,7 +181,13 @@ const marvel = {
                 }
                 const response = await fetch(seriesSelected)
                 const json = await response.json()
-                func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                try {
+                    func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
             }
         }
     },
@@ -187,7 +210,7 @@ const marvel = {
             let tempNode = templateComicRender.content
             let htmlNode = document.importNode(tempNode,true)
             htmlNode.querySelector('.card_title').textContent = comicSelected.title
-            htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${comicSelected.thumbnail.path}.${comicSelected.thumbnail.extension}`)
+            if (comicSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${comicSelected.thumbnail.path}.${comicSelected.thumbnail.extension}`)
             htmlNode.querySelector('.card_description').textContent = comicSelected.description
             comicGalery.appendChild(htmlNode)
         }
@@ -269,8 +292,18 @@ const marvel = {
                 let tempNode = comicGalery_storiesListTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
                 htmlNode.querySelector('.card_list_element__name').textContent = (storiesFound.name.length > 30) ? `${storiesFound.name.slice(0,30)} ...` : `${storiesFound.name}`
+                htmlNode.querySelector('.card_list_element__name').setAttribute("id", `storiesLink${index}`)
                 storiesURI.push(storiesFound.resourceURI)
                 comicGalery_storiesList.appendChild(htmlNode)
+                func.$(`storiesLink${index}`).addEventListener("click" , async () => {
+                    let storiesSelected = `${storiesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (storiesSelected.startsWith('http://')) {
+                        storiesSelected = `https${storiesSelected.slice(4)}`
+                    }
+                    const response = await fetch(storiesSelected)
+                    const json = await response.json()
+                    marvel.renderStories(json.data.results[0].id)
+                })
             }
         }
 
@@ -295,7 +328,12 @@ const marvel = {
             }
             const response = await fetch(seriesSelected)
             const json = await response.json()
-            func.$(`seriesPicture`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+            try {
+                func.$(`seriesPicture`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+            } catch (error) {
+                console.log('Thumbnail loading interrupted')
+            }
+            
         }
     },
     renderCreators: async (id) =>{
@@ -317,7 +355,7 @@ const marvel = {
             let tempNode = templateCreatorsRender.content
             let htmlNode = document.importNode(tempNode,true)
             htmlNode.querySelector('.card_title').textContent = creatorSelected.fullName
-            htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${creatorSelected.thumbnail.path}.${creatorSelected.thumbnail.extension}`)
+            if (creatorSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${creatorSelected.thumbnail.path}.${creatorSelected.thumbnail.extension}`)
             htmlNode.querySelector('.card_description').textContent = creatorSelected.description
             seriesGalery.appendChild(htmlNode)
         }
@@ -379,8 +417,18 @@ const marvel = {
                 let tempNode = creatorsGalery_storiesListTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
                 htmlNode.querySelector('.card_list_element__name').textContent = (storiesFound.name.length > 30) ? `${storiesFound.name.slice(0,30)} ...` : `${storiesFound.name}`
+                htmlNode.querySelector('.card_list_element__name').setAttribute("id", `storiesLink${index}`)
                 storiesURI.push(storiesFound.resourceURI)
                 creatorsGalery_storiesList.appendChild(htmlNode)
+                func.$(`storiesLink${index}`).addEventListener("click" , async () => {
+                    let storiesSelected = `${storiesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (storiesSelected.startsWith('http://')) {
+                        storiesSelected = `https${storiesSelected.slice(4)}`
+                    }
+                    const response = await fetch(storiesSelected)
+                    const json = await response.json()
+                    marvel.renderStories(json.data.results[0].id)
+                })
             }
         }
 
@@ -417,7 +465,13 @@ const marvel = {
                 }
                 const response = await fetch(comicSelected)
                 const json = await response.json()
-                func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                try {
+                    func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
             }
         }
 
@@ -430,7 +484,13 @@ const marvel = {
                 }
                 const response = await fetch(seriesSelected)
                 const json = await response.json()
-                func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                try {
+                    func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
             }
         }
 
@@ -443,7 +503,13 @@ const marvel = {
                 }
                 const response = await fetch(eventsSelected)
                 const json = await response.json()
-                func.$(`eventsPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                try {
+                    func.$(`eventsPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
             }
         }
 
@@ -468,7 +534,7 @@ const marvel = {
             let tempNode = templateSeriesRender.content
             let htmlNode = document.importNode(tempNode,true)
             htmlNode.querySelector('.card_title').textContent = seriesSelected.title
-            htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${seriesSelected.thumbnail.path}.${seriesSelected.thumbnail.extension}`)
+            if (seriesSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${seriesSelected.thumbnail.path}.${seriesSelected.thumbnail.extension}`)
             htmlNode.querySelector('.card_description').textContent = seriesSelected.description
             seriesGalery.appendChild(htmlNode)
         }
@@ -548,8 +614,18 @@ const marvel = {
                 let tempNode = seriesGalery_storiesListTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
                 htmlNode.querySelector('.card_list_element__name').textContent = (storiesFound.name.length > 30) ? `${storiesFound.name.slice(0,30)} ...` : `${storiesFound.name}`
+                htmlNode.querySelector('.card_list_element__name').setAttribute("id", `storiesLink${index}`)
                 storiesURI.push(storiesFound.resourceURI)
                 seriesGalery_storiesList.appendChild(htmlNode)
+                func.$(`storiesLink${index}`).addEventListener("click" , async () => {
+                    let storiesSelected = `${storiesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (storiesSelected.startsWith('http://')) {
+                        storiesSelected = `https${storiesSelected.slice(4)}`
+                    }
+                    const response = await fetch(storiesSelected)
+                    const json = await response.json()
+                    marvel.renderStories(json.data.results[0].id)
+                })
             }
         }
 
@@ -586,7 +662,13 @@ const marvel = {
                 }
                 const response = await fetch(characterSelected)
                 const json = await response.json()
-                func.$(`charactersPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                try {
+                    func.$(`charactersPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
             }
         }
 
@@ -599,7 +681,13 @@ const marvel = {
                 }
                 const response = await fetch(comicSelected)
                 const json = await response.json()
-                func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                try {
+                    func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
             }
         }
 
@@ -612,12 +700,230 @@ const marvel = {
                 }
                 const response = await fetch(eventsSelected)
                 const json = await response.json()
-                func.$(`eventsPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                try {
+                    func.$(`eventsPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
             }
         }
     },
     renderStories: async (id) =>{
-        console.log('renderStories NOT READY')
+        
+        const URLAPI = `https://gateway.marvel.com:443/v1/public/stories/${id}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+        const response = await fetch(URLAPI)
+        const json = await response.json()    
+        const storiesSelected = await json.data.results[0]
+
+        let charactersURI = []
+        let creatorsURI = []
+        let seriesURI = []
+        let comicURI = []
+        let eventsURI = []
+        
+        // Code to render Story information
+        {
+            cleanGuidebook()
+            console.log('STORIES SELECTED: ', json)
+            let tempNode = templateStoriesRender.content
+            let htmlNode = document.importNode(tempNode,true)
+            htmlNode.querySelector('.card_title').textContent = storiesSelected.title
+            if (storiesSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${storiesSelected.thumbnail.path}.${storiesSelected.thumbnail.extension}`)
+            htmlNode.querySelector('.card_description').textContent = storiesSelected.description
+            storiesGalery.appendChild(htmlNode)
+        }
+
+        // Code to create list of characters
+        {
+            const storiesGalery_charactersRailTemplate = document.getElementById('storiesGalery_charactersRailTemplate')
+            const storiesGalery_charactersRail = document.getElementById('storiesGalery_charactersRail')
+            for (let index = 0; index < storiesSelected.characters.items.length; index++) {
+                const heroFound = storiesSelected.characters.items[index];
+                let tempNode = storiesGalery_charactersRailTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.card_rail_element__name').textContent = (heroFound.name.length > 30) ? `${heroFound.name.slice(0,30)} ...` : `${heroFound.name}`
+                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `charactersPicture${index}`)
+                charactersURI.push(heroFound.resourceURI)
+                storiesGalery_charactersRail.appendChild(htmlNode)
+                func.$(`charactersPicture${index}`).addEventListener("click" , async () => {
+                    marvel.renderCharacter(heroFound.name)
+                })
+            }
+        }
+
+        // Code to create list of creators
+        {
+            const storiesGalery_creatorsListTemplate = document.getElementById('storiesGalery_creatorsListTemplate')
+            const storiesGalery_creatorsList = document.getElementById('storiesGalery_creatorsList')
+            for (let index = 0; index < storiesSelected.creators.items.length; index++) {
+                const creatorFound = storiesSelected.creators.items[index];
+                let tempNode = storiesGalery_creatorsListTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.card_list_element__name').textContent = (creatorFound.name.length > 30) ? `${creatorFound.name.slice(0,30)} ...` : `${creatorFound.name}`
+                htmlNode.querySelector('.card_list_element__name').setAttribute("id", `creatorsLink${index}`)
+                creatorsURI.push(creatorFound.resourceURI)
+                storiesGalery_creatorsList.appendChild(htmlNode)
+                func.$(`creatorsLink${index}`).addEventListener("click" , async () => {
+                    let creatorSelected = `${creatorsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (creatorSelected.startsWith('http://')) {
+                        creatorSelected = `https${creatorSelected.slice(4)}`
+                    }
+                    const response = await fetch(creatorSelected)
+                    const json = await response.json()
+                    marvel.renderCreators(json.data.results[0].id)
+                })
+            }
+        }
+
+        // Code to create list of comics
+        {
+            const storiesGalery_comicRailTemplate = document.getElementById('storiesGalery_comicRailTemplate')
+            const storiesGalery_comicRail = document.getElementById('storiesGalery_comicRail')
+            for (let index = 0; index < storiesSelected.comics.items.length; index++) {
+                const comicFound = storiesSelected.comics.items[index];
+                let tempNode = storiesGalery_comicRailTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.card_rail_element__name').textContent = (comicFound.name.length > 30) ? `${comicFound.name.slice(0,30)} ...` : `${comicFound.name}`
+                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `comicPicture${index}`)
+                comicURI.push(comicFound.resourceURI)
+                storiesGalery_comicRail.appendChild(htmlNode)
+                func.$(`comicPicture${index}`).addEventListener("click" , async () => {
+                    let comicSelected = `${comicURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (comicSelected.startsWith('http://')) {
+                        comicSelected = `https${comicSelected.slice(4)}`
+                    }
+                    const response = await fetch(comicSelected)
+                    const json = await response.json()
+                    marvel.renderComic(json.data.results[0].id)
+                })
+            }
+        }
+
+        // Code to create list of series
+        {
+            const storiesGalery_seriesRailTemplate = document.getElementById('storiesGalery_seriesRailTemplate')
+            const storiesGalery_seriesRail = document.getElementById('storiesGalery_seriesRail')
+            for (let index = 0; index < storiesSelected.series.items.length; index++) {
+                const seriesFound = storiesSelected.series.items[index];
+                let tempNode = storiesGalery_seriesRailTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.card_rail_element__name').textContent = (seriesFound.name.length > 30) ? `${seriesFound.name.slice(0,30)} ...` : `${seriesFound.name}`
+                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `seriesPicture${index}`)
+                seriesURI.push(seriesFound.resourceURI)
+                storiesGalery_seriesRail.appendChild(htmlNode)
+                func.$(`seriesPicture${index}`).addEventListener("click" , async () => {
+                    let seriesSelected = `${seriesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (seriesSelected.startsWith('http://')) {
+                        seriesSelected = `https${seriesSelected.slice(4)}`
+                    }
+                    const response = await fetch(seriesSelected)
+                    const json = await response.json()
+                    marvel.renderSeries(json.data.results[0].id)
+                })
+            }
+        }
+
+        // Code to create list of events
+        {
+            const storiesGalery_eventsRailTemplate = document.getElementById('storiesGalery_eventsRailTemplate')
+            const storiesGalery_eventsRail = document.getElementById('storiesGalery_eventsRail')
+            for (let index = 0; index < storiesSelected.events.items.length; index++) {
+                const eventFound = storiesSelected.events.items[index];
+                let tempNode = storiesGalery_eventsRailTemplate.content
+                let htmlNode = document.importNode(tempNode,true)
+                htmlNode.querySelector('.card_rail_element__name').textContent = (eventFound.name.length > 30) ? `${eventFound.name.slice(0,30)} ...` : `${eventFound.name}`
+                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `eventsPicture${index}`)
+                eventsURI.push(eventFound.resourceURI)
+                storiesGalery_eventsRail.appendChild(htmlNode)
+                func.$(`eventsPicture${index}`).addEventListener("click" , async () => {
+                    let eventsSelected = `${eventsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (eventsSelected.startsWith('http://')) {
+                        eventsSelected = `https${eventsSelected.slice(4)}`
+                    }
+                    const response = await fetch(eventsSelected)
+                    const json = await response.json()
+                    marvel.renderEvents(json.data.results[0].id)
+                })
+            }
+        }
+
+        // Code to add thumbnails to characters
+        {
+            for (let index = 0; index < charactersURI.length; index++) {
+                let characterSelected = `${charactersURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                if (characterSelected.startsWith('http://')) {
+                    characterSelected = `https${characterSelected.slice(4)}`
+                }
+                const response = await fetch(characterSelected)
+                const json = await response.json()
+                try {
+                    func.$(`charactersPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
+            }
+        }
+
+        // Code to add thumbnails to comics
+        {
+            for (let index = 0; index < comicURI.length; index++) {
+                let comicSelected = `${comicURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                if (comicSelected.startsWith('http://')) {
+                    comicSelected = `https${comicSelected.slice(4)}`
+                }
+                const response = await fetch(comicSelected)
+                const json = await response.json()
+                try {
+                    func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
+            }
+        }
+
+        // Code to add thumbanails to series
+        {
+            for (let index = 0; index < seriesURI.length; index++) {
+                let seriesSelected = `${seriesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                if (seriesSelected.startsWith('http://')) {
+                    seriesSelected = `https${seriesSelected.slice(4)}`
+                }
+                const response = await fetch(seriesSelected)
+                const json = await response.json()
+                try {
+                    func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
+            }
+        }
+
+        // Code to add thumbnails to events
+        {
+            for (let index = 0; index < eventsURI.length; index++) {
+                let eventsSelected = `${eventsURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                if (eventsSelected.startsWith('http://')) {
+                    eventsSelected = `https${eventsSelected.slice(4)}`
+                }
+                const response = await fetch(eventsSelected)
+                const json = await response.json()
+                try {
+                    func.$(`eventsPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
+            }
+        }
     },
     renderEvents: async (id) =>{
         
@@ -639,7 +945,7 @@ const marvel = {
             let tempNode = templateEventsRender.content
             let htmlNode = document.importNode(tempNode,true)
             htmlNode.querySelector('.card_title').textContent = eventsSelected.title
-            htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${eventsSelected.thumbnail.path}.${eventsSelected.thumbnail.extension}`)
+            if (eventsSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${eventsSelected.thumbnail.path}.${eventsSelected.thumbnail.extension}`)
             htmlNode.querySelector('.card_description').textContent = eventsSelected.description
             eventsGalery.appendChild(htmlNode)
         }
@@ -719,8 +1025,18 @@ const marvel = {
                 let tempNode = eventsGalery_storiesListTemplate.content
                 let htmlNode = document.importNode(tempNode,true)
                 htmlNode.querySelector('.card_list_element__name').textContent = (storiesFound.name.length > 30) ? `${storiesFound.name.slice(0,30)} ...` : `${storiesFound.name}`
+                htmlNode.querySelector('.card_list_element__name').setAttribute("id", `storiesLink${index}`)
                 storiesURI.push(storiesFound.resourceURI)
                 eventsGalery_storiesList.appendChild(htmlNode)
+                func.$(`storiesLink${index}`).addEventListener("click" , async () => {
+                    let storiesSelected = `${storiesURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+                    if (storiesSelected.startsWith('http://')) {
+                        storiesSelected = `https${storiesSelected.slice(4)}`
+                    }
+                    const response = await fetch(storiesSelected)
+                    const json = await response.json()
+                    marvel.renderStories(json.data.results[0].id)
+                })
             }
         }
 
@@ -757,7 +1073,13 @@ const marvel = {
                 }
                 const response = await fetch(characterSelected)
                 const json = await response.json()
-                func.$(`charactersPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                try {
+                    func.$(`charactersPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
             }
         }
 
@@ -770,7 +1092,13 @@ const marvel = {
                 }
                 const response = await fetch(comicSelected)
                 const json = await response.json()
-                func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                try {
+                    func.$(`comicPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
             }
         }
 
@@ -783,7 +1111,13 @@ const marvel = {
                 }
                 const response = await fetch(seriesSelected)
                 const json = await response.json()
-                func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                try {
+                    func.$(`seriesPicture${index}`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
+                } catch (error) {
+                    console.log('Thumbnail loading interrupted')
+                    break;
+                }
+                
             }
         }
     },
