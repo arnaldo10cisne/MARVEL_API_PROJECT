@@ -8,10 +8,10 @@ export const cleanGuidebook = () => {
     elem.characterSearchResults.innerHTML = ""
     elem.characterGalery.innerHTML = ""
     elem.comicGalery.innerHTML = ""
-    seriesGalery.innerHTML = ""
-    eventsGalery.innerHTML = ""
-    creatorsGalery.innerHTML = ""
-    storiesGalery.innerHTML = ""
+    elem.seriesGalery.innerHTML = ""
+    elem.eventsGalery.innerHTML = ""
+    elem.creatorsGalery.innerHTML = ""
+    elem.storiesGalery.innerHTML = ""
 }
 
 export const getAccessData = async () => {
