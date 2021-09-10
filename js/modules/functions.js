@@ -48,3 +48,27 @@ export const renderImages = async (dataURI, idImageContainer, ACCESSDATA) => {
         }
     }
 }
+
+export const renderElementsStructure = (template, templateID, structure, structureID, arrayOfElements, elementID, dataURI, renderFn, ACCESSDATA, structureType) => {
+    template = document.getElementById(templateID)
+    structure = document.getElementById(structureID)
+    for (let index = 0; index < arrayOfElements.items.length; index++) {
+        const elementFound = arrayOfElements.items[index];
+        let tempNode = template.content
+        let htmlNode = document.importNode(tempNode,true)
+        htmlNode.querySelector(`.card_${structureType}_element__name`).textContent = (elementFound.name.length > 30) ? `${elementFound.name.slice(0,30)} ...` : `${elementFound.name}`
+        if(structureType == 'rail') htmlNode.querySelector(`.card_${structureType}_element__thumbnail`).setAttribute("id", `${elementID}${index}`)
+        if(structureType == 'list') htmlNode.querySelector(`.card_${structureType}_element__name`).setAttribute("id", `${elementID}${index}`)
+        dataURI.push(elementFound.resourceURI)
+        structure.appendChild(htmlNode)
+        $(`${elementID}${index}`).addEventListener("click" , async () => {
+            let elementSelected = `${dataURI[index]}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+            if (elementSelected.startsWith('http://')) {
+                elementSelected = `https${elementSelected.slice(4)}`
+            }
+            const response = await fetch(elementSelected)
+            const json = await response.json()
+            renderFn(json.data.results[0].id)
+        })
+    }
+}
