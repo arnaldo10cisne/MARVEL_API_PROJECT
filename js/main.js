@@ -16,7 +16,7 @@ const marvel = {
         {
             func.cleanGuidebook()
             if (json.data.results.length == 1) {
-                marvel.renderCharacter(json.data.results[0].name)
+                marvel.renderCharacter(json.data.results[0].id)
             } else {
                 for (let index = 0; index < json.data.results.length; index++) {
                     const heroFound = json.data.results[index];
@@ -27,15 +27,15 @@ const marvel = {
                     htmlNode.querySelector('.character_search_result__container').setAttribute("id", `resultID${index}`)
                     elem.characterSearchResults.appendChild(htmlNode)
                     func.$(`resultID${index}`).addEventListener("click" , () => {
-                        marvel.renderCharacter(heroFound.name)
+                        marvel.renderCharacter(heroFound.id)
                     })
                 }
             }
         }
     },
-    renderCharacter: async (name) => {
+    renderCharacter: async (id) => {
         
-        const URLAPI = `https://gateway.marvel.com:443/v1/public/characters?${ACCESSDATA.tsAccess}&name=${name}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
+        const URLAPI = `https://gateway.marvel.com:443/v1/public/characters/${id}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
         const response = await fetch(URLAPI)
         const json = await response.json()    
         const heroSelected = await json.data.results[0]
@@ -51,7 +51,7 @@ const marvel = {
             'charactersGalery_comicRailTemplate', 
             elem.charactersGalery_comicsRail, 
             'charactersGalery_comicsRail', 
-            heroSelected.comics, 
+            heroSelected.comics.items, 
             'comicPicture', 
             comicURI, 
             marvel.renderComic, 
@@ -63,7 +63,7 @@ const marvel = {
             'charactersGalery_seriesRailTemplate', 
             elem.charactersGalery_seriesRail, 
             'charactersGalery_seriesRail', 
-            heroSelected.series, 
+            heroSelected.series.items, 
             'seriesPicture', 
             seriesURI, 
             marvel.renderSeries, 
@@ -75,7 +75,7 @@ const marvel = {
             'charactersGalery_storiesListTemplate', 
             elem.charactersGalery_storiesList, 
             'charactersGalery_storiesList', 
-            heroSelected.stories, 
+            heroSelected.stories.items, 
             'storiesLink', 
             storiesURI, 
             marvel.renderStories, 
@@ -97,69 +97,52 @@ const marvel = {
         let charactersURI = []
         let creatorsURI = []
         let storiesURI = []
-        let seriesURI
+        let seriesURI = []
 
         func.renderMainInfo(elem.templateComicRender, comicSelected, elem.comicGalery, 3)
 
-        //THE WAY THE FUNCTION 'marvel.renderCharacter' FETCHES INFORMATION NEEDS TO CHANGE FROM 'name' TO 'id'
-        // Code to create list of characters
-        {
-            for (let index = 0; index < comicSelected.characters.items.length; index++) {
-                const heroFound = comicSelected.characters.items[index];
-                let tempNode = elem.comicGalery_charactersRailTemplate.content
-                let htmlNode = document.importNode(tempNode,true)
-                htmlNode.querySelector('.card_rail_element__name').textContent = (heroFound.name.length > 30) ? `${heroFound.name.slice(0,30)} ...` : `${heroFound.name}`
-                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `charactersPicture${index}`)
-                charactersURI.push(heroFound.resourceURI)
-                elem.comicGalery_charactersRail.appendChild(htmlNode)
-                func.$(`charactersPicture${index}`).addEventListener("click" , async () => {
-                    marvel.renderCharacter(heroFound.name)
-                })
-            }
-        }
+        func.renderElementsStructure(
+            elem.comicGalery_charactersRailTemplate, 
+            'comicGalery_charactersRailTemplate', 
+            elem.comicGalery_charactersRail, 
+            'comicGalery_charactersRail', 
+            comicSelected.characters.items, 
+            'charactersPicture', 
+            charactersURI, 
+            marvel.renderCharacter, 
+            ACCESSDATA,
+            'rail')
 
         func.renderElementsStructure(
             elem.comicGalery_creatorsListTemplate, 
             'comicGalery_creatorsListTemplate', 
             elem.comicGalery_creatorsList, 
             'comicGalery_creatorsList', 
-            comicSelected.creators, 
+            comicSelected.creators.items, 
             'creatorsLink', 
             creatorsURI, 
             marvel.renderCreators, 
             ACCESSDATA,
             'list')
 
-        // THIS PIECE OF CODE NEEDS TO BE REFACTOR IN ORDER TO LOOK SIMILAR TO THE OTHER STRUCTURE GENERATORS
-        // Code to create list of series
-        {
-            const seriesFound = comicSelected.series
-            let tempNode = elem.comicGalery_seriesRailTemplate.content
-            let htmlNode = document.importNode(tempNode,true)
-            htmlNode.querySelector('.card_rail_element__name').textContent = (seriesFound.name.length > 30) ? `${seriesFound.name.slice(0,30)} ...` : `${seriesFound.name}`
-            htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `seriesPicture`)
-            seriesURI = seriesFound.resourceURI
-            if (seriesURI.startsWith('http://')) {
-                seriesURI = `https${seriesURI.slice(4)}`
-            }
-            elem.comicGalery_seriesRail.appendChild(htmlNode)
-            func.$('seriesPicture').addEventListener("click", async () => {
-                let seriesSelected = `${seriesURI}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-                if (seriesSelected.startsWith('http://')) {
-                    seriesSelected = `https${seriesSelected.slice(4)}`
-                }
-                const response = await fetch(seriesSelected)
-                const json = await response.json()
-                marvel.renderSeries(json.data.results[0].id)
-            })
-        }
+        func.renderElementsStructure(
+            elem.comicGalery_seriesRailTemplate, 
+            'comicGalery_seriesRailTemplate', 
+            elem.comicGalery_seriesRail, 
+            'comicGalery_seriesRail', 
+            [comicSelected.series], 
+            'seriesPicture', 
+            seriesURI, 
+            marvel.renderSeries, 
+            ACCESSDATA,
+            'rail')
 
         func.renderElementsStructure(
             elem.comicGalery_storiesListTemplate, 
             'comicGalery_storiesListTemplate', 
             elem.comicGalery_storiesList, 
             'comicGalery_storiesList', 
-            comicSelected.stories, 
+            comicSelected.stories.items, 
             'storiesLink', 
             storiesURI, 
             marvel.renderStories, 
@@ -168,22 +151,7 @@ const marvel = {
 
         func.renderImages(charactersURI, 'charactersPicture', ACCESSDATA)
 
-        //IN ORDER TO ADD 'renderImaged' FUNCTION TO THIS PIECE OF CODE, THE STRUCTURE GENERATOR ABOVE NEEDS TO BE REFACTOR 
-        // Code to add thumbanails to series
-        {
-            let seriesSelected = `${seriesURI}?${ACCESSDATA.tsAccess}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`
-            if (seriesSelected.startsWith('http://')) {
-                seriesSelected = `https${seriesSelected.slice(4)}`
-            }
-            const response = await fetch(seriesSelected)
-            const json = await response.json()
-            try {
-                func.$(`seriesPicture`).src = `${json.data.results[0].thumbnail.path}.${json.data.results[0].thumbnail.extension}`
-            } catch (error) {
-                console.log('Thumbnail loading interrupted')
-            }
-            
-        }
+        func.renderImages(seriesURI, 'seriesPicture', ACCESSDATA)
     },
     renderCreators: async (id) =>{
         
@@ -204,7 +172,7 @@ const marvel = {
             'creatorsGalery_comicsRailTemplate', 
             elem.creatorsGalery_comicsRail, 
             'creatorsGalery_comicsRail', 
-            creatorSelected.comics, 
+            creatorSelected.comics.items, 
             'comicPicture', 
             comicURI, 
             marvel.renderComic, 
@@ -216,7 +184,7 @@ const marvel = {
             'creatorsGalery_seriesRailTemplate', 
             elem.creatorsGalery_seriesRail, 
             'creatorsGalery_seriesRail', 
-            creatorSelected.series, 
+            creatorSelected.series.items, 
             'seriesPicture', 
             seriesURI, 
             marvel.renderSeries, 
@@ -228,7 +196,7 @@ const marvel = {
             'creatorsGalery_storiesListTemplate', 
             elem.creatorsGalery_storiesList, 
             'creatorsGalery_storiesList', 
-            creatorSelected.stories, 
+            creatorSelected.stories.items, 
             'storiesLink', 
             storiesURI, 
             marvel.renderStories, 
@@ -240,7 +208,7 @@ const marvel = {
             'creatorsGalery_eventsRailTemplate', 
             elem.creatorsGalery_eventsRail, 
             'creatorsGalery_eventsRail', 
-            creatorSelected.events, 
+            creatorSelected.events.items, 
             'eventsPicture', 
             eventsURI, 
             marvel.renderEvents, 
@@ -269,28 +237,24 @@ const marvel = {
         
         func.renderMainInfo(elem.templateSeriesRender, seriesSelected, elem.seriesGalery, 3)
 
-        // Code to create list of characters
-        {
-            for (let index = 0; index < seriesSelected.characters.items.length; index++) {
-                const heroFound = seriesSelected.characters.items[index];
-                let tempNode = elem.seriesGalery_charactersRailTemplate.content
-                let htmlNode = document.importNode(tempNode,true)
-                htmlNode.querySelector('.card_rail_element__name').textContent = (heroFound.name.length > 30) ? `${heroFound.name.slice(0,30)} ...` : `${heroFound.name}`
-                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `charactersPicture${index}`)
-                charactersURI.push(heroFound.resourceURI)
-                elem.seriesGalery_charactersRail.appendChild(htmlNode)
-                func.$(`charactersPicture${index}`).addEventListener("click" , async () => {
-                    marvel.renderCharacter(heroFound.name)
-                })
-            }
-        }
+        func.renderElementsStructure(
+            elem.seriesGalery_charactersRailTemplate, 
+            'seriesGalery_charactersRailTemplate', 
+            elem.seriesGalery_charactersRail, 
+            'seriesGalery_charactersRail', 
+            seriesSelected.characters.items, 
+            'charactersPicture', 
+            charactersURI, 
+            marvel.renderCharacter, 
+            ACCESSDATA,
+            'rail')
 
         func.renderElementsStructure(
             elem.seriesGalery_creatorsListTemplate, 
             'seriesGalery_creatorsListTemplate', 
             elem.seriesGalery_creatorsList, 
             'seriesGalery_creatorsList', 
-            seriesSelected.creators, 
+            seriesSelected.creators.items, 
             'creatorsLink', 
             creatorsURI, 
             marvel.renderCreators, 
@@ -302,7 +266,7 @@ const marvel = {
             'seriesGalery_comicRailTemplate', 
             elem.seriesGalery_comicRail, 
             'seriesGalery_comicRail', 
-            seriesSelected.comics, 
+            seriesSelected.comics.items, 
             'comicPicture', 
             comicURI, 
             marvel.renderComic, 
@@ -314,7 +278,7 @@ const marvel = {
             'seriesGalery_storiesListTemplate', 
             elem.seriesGalery_storiesList, 
             'seriesGalery_storiesList', 
-            seriesSelected.stories, 
+            seriesSelected.stories.items, 
             'comicPicture', 
             storiesURI, 
             marvel.renderStories, 
@@ -326,7 +290,7 @@ const marvel = {
             'seriesGalery_eventsRailTemplate', 
             elem.seriesGalery_eventsRail, 
             'seriesGalery_eventsRail', 
-            seriesSelected.events, 
+            seriesSelected.events.items, 
             'eventsPicture', 
             eventsURI, 
             marvel.renderEvents, 
@@ -354,28 +318,24 @@ const marvel = {
         
         func.renderMainInfo(elem.templateStoriesRender, storiesSelected, elem.storiesGalery, 3)
 
-        // Code to create list of characters
-        {
-            for (let index = 0; index < storiesSelected.characters.items.length; index++) {
-                const heroFound = storiesSelected.characters.items[index];
-                let tempNode = elem.storiesGalery_charactersRailTemplate.content
-                let htmlNode = document.importNode(tempNode,true)
-                htmlNode.querySelector('.card_rail_element__name').textContent = (heroFound.name.length > 30) ? `${heroFound.name.slice(0,30)} ...` : `${heroFound.name}`
-                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `charactersPicture${index}`)
-                charactersURI.push(heroFound.resourceURI)
-                elem.storiesGalery_charactersRail.appendChild(htmlNode)
-                func.$(`charactersPicture${index}`).addEventListener("click" , async () => {
-                    marvel.renderCharacter(heroFound.name)
-                })
-            }
-        }
+        func.renderElementsStructure(
+            elem.storiesGalery_charactersRailTemplate, 
+            'storiesGalery_charactersRailTemplate', 
+            elem.storiesGalery_charactersRail, 
+            'storiesGalery_charactersRail', 
+            storiesSelected.characters.items, 
+            'charactersPicture', 
+            charactersURI, 
+            marvel.renderCharacter, 
+            ACCESSDATA,
+            'rail')
 
         func.renderElementsStructure(
             elem.storiesGalery_creatorsListTemplate, 
             'storiesGalery_creatorsListTemplate', 
             elem.storiesGalery_creatorsList, 
             'storiesGalery_creatorsList', 
-            storiesSelected.creators, 
+            storiesSelected.creators.items, 
             'creatorsLink', 
             creatorsURI, 
             marvel.renderCreators, 
@@ -387,7 +347,7 @@ const marvel = {
             'storiesGalery_comicRailTemplate', 
             elem.storiesGalery_comicRail, 
             'storiesGalery_comicRail', 
-            storiesSelected.comics, 
+            storiesSelected.comics.items, 
             'comicPicture', 
             comicURI, 
             marvel.renderComic, 
@@ -399,7 +359,7 @@ const marvel = {
             'storiesGalery_seriesRailTemplate', 
             elem.storiesGalery_seriesRail, 
             'storiesGalery_seriesRail', 
-            storiesSelected.series, 
+            storiesSelected.series.items, 
             'seriesPicture', 
             seriesURI, 
             marvel.renderSeries, 
@@ -411,7 +371,7 @@ const marvel = {
             'storiesGalery_eventsRailTemplate', 
             elem.storiesGalery_eventsRail, 
             'storiesGalery_eventsRail', 
-            storiesSelected.events, 
+            storiesSelected.events.items, 
             'eventsPicture', 
             eventsURI, 
             marvel.renderEvents, 
@@ -441,28 +401,24 @@ const marvel = {
         
         func.renderMainInfo(elem.templateEventsRender, eventsSelected, elem.eventsGalery, 3)
 
-        // Code to create list of characters
-        {
-            for (let index = 0; index < eventsSelected.characters.items.length; index++) {
-                const heroFound = eventsSelected.characters.items[index];
-                let tempNode = elem.eventsGalery_charactersRailTemplate.content
-                let htmlNode = document.importNode(tempNode,true)
-                htmlNode.querySelector('.card_rail_element__name').textContent = (heroFound.name.length > 30) ? `${heroFound.name.slice(0,30)} ...` : `${heroFound.name}`
-                htmlNode.querySelector('.card_rail_element__thumbnail').setAttribute("id", `charactersPicture${index}`)
-                charactersURI.push(heroFound.resourceURI)
-                elem.eventsGalery_charactersRail.appendChild(htmlNode)
-                func.$(`charactersPicture${index}`).addEventListener("click" , async () => {
-                    marvel.renderCharacter(heroFound.name)
-                })
-            }
-        }
+        func.renderElementsStructure(
+            elem.eventsGalery_charactersRailTemplate, 
+            'eventsGalery_charactersRailTemplate', 
+            elem.eventsGalery_charactersRail, 
+            'eventsGalery_charactersRail', 
+            eventsSelected.characters.items, 
+            'charactersPicture', 
+            charactersURI, 
+            marvel.renderCharacter, 
+            ACCESSDATA,
+            'rail')
 
         func.renderElementsStructure(
             elem.eventsGalery_creatorsListTemplate, 
             'eventsGalery_creatorsListTemplate', 
             elem.eventsGalery_creatorsList, 
             'eventsGalery_creatorsList', 
-            eventsSelected.creators, 
+            eventsSelected.creators.items, 
             'creatorsLink', 
             creatorsURI, 
             marvel.renderCreators, 
@@ -474,7 +430,7 @@ const marvel = {
             'eventsGalery_comicRailTemplate', 
             elem.eventsGalery_comicRail, 
             'eventsGalery_comicRail', 
-            eventsSelected.comics, 
+            eventsSelected.comics.items, 
             'comicPicture', 
             comicURI, 
             marvel.renderComic, 
@@ -486,7 +442,7 @@ const marvel = {
             'eventsGalery_storiesListTemplate', 
             elem.eventsGalery_storiesList, 
             'eventsGalery_storiesList', 
-            eventsSelected.stories, 
+            eventsSelected.stories.items, 
             'storiesLink', 
             storiesURI, 
             marvel.renderStories, 
@@ -498,7 +454,7 @@ const marvel = {
             'eventsGalery_seriesRailTemplate', 
             elem.eventsGalery_seriesRail, 
             'eventsGalery_seriesRail', 
-            eventsSelected.series, 
+            eventsSelected.series.items, 
             'seriesPicture', 
             seriesURI, 
             marvel.renderSeries, 
