@@ -15,9 +15,12 @@ const marvel = {
         // Code to create list of possible choices
         {
             func.cleanGuidebook()
+            
             if (json.data.results.length == 1) {
                 marvel.renderCharacter(json.data.results[0].id)
+                document.getElementById('marvelUniversePicture').style.display="none"
             } else {
+                document.getElementById('marvelUniversePicture').style.display="none"
                 for (let index = 0; index < json.data.results.length; index++) {
                     const heroFound = json.data.results[index];
                     let tempNode = elem.templateSearchResults.content
@@ -26,6 +29,7 @@ const marvel = {
                     htmlNode.querySelector('.character_search_result__picture').setAttribute("src", `${heroFound.thumbnail.path}.${heroFound.thumbnail.extension}`)
                     htmlNode.querySelector('.character_search_result__container').setAttribute("id", `resultID${index}`)
                     elem.characterSearchResults.appendChild(htmlNode)
+                    func.$(`resultID${index}`).classList.add(`search_result_color_${Math.floor(Math.random()*4+1)}`)
                     func.$(`resultID${index}`).addEventListener("click" , () => {
                         marvel.renderCharacter(heroFound.id)
                     })
@@ -468,6 +472,10 @@ const marvel = {
         func.renderImages(seriesURI, 'seriesPicture', ACCESSDATA)
     },
 }
+
+document.getElementById('mainTitle').addEventListener("click", ()=>{
+    location.reload()
+})
 
 elem.searchButton.addEventListener("click", ()=>{
     let hero = elem.searchHeroBar.value

@@ -12,6 +12,7 @@ export const cleanGuidebook = () => {
     elem.eventsGalery.innerHTML = ""
     elem.creatorsGalery.innerHTML = ""
     elem.storiesGalery.innerHTML = ""
+    document.getElementById('cardTypeList').style.display="none"
 }
 
 export const getAccessData = async () => {
@@ -22,14 +23,17 @@ export const getAccessData = async () => {
 
 export const renderMainInfo = (template, elementSelected, cardGalery, nameType) => {
     cleanGuidebook()
+    elem.searchHeroBar.value = ""
     let tempNode = template.content
     let htmlNode = document.importNode(tempNode,true)
     if (nameType == 1) htmlNode.querySelector('.card_title').textContent = elementSelected.name
     if (nameType == 2) htmlNode.querySelector('.card_title').textContent = elementSelected.fullName
     if (nameType == 3) htmlNode.querySelector('.card_title').textContent = elementSelected.title
     if (elementSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${elementSelected.thumbnail.path}.${elementSelected.thumbnail.extension}`)
-    htmlNode.querySelector('.card_description').textContent = elementSelected.description
+    htmlNode.querySelector('.card_description').innerHTML = elementSelected.description
     cardGalery.appendChild(htmlNode)
+    document.getElementById('cardTypeList').style.display="flex"
+    document.getElementById('cardStart').scrollIntoView()
 }
 
 export const renderImages = async (dataURI, idImageContainer, ACCESSDATA) => {
@@ -70,5 +74,6 @@ export const renderElementsStructure = (template, templateID, structure, structu
             const json = await response.json()
             renderFn(json.data.results[0].id)
         })
+        document.getElementById('cardStart').scrollIntoView()
     }
 }
