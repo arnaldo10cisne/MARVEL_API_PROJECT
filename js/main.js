@@ -20,7 +20,7 @@ const marvel = {
                 marvel.renderCharacter(json.data.results[0].id)
                 document.getElementById('marvelUniversePicture').style.display="none"
             } else {
-                document.getElementById('marvelUniversePicture').style.display="none"
+                // document.getElementById('marvelUniversePicture').style.display="none"
                 for (let index = 0; index < json.data.results.length; index++) {
                     const heroFound = json.data.results[index];
                     let tempNode = elem.templateSearchResults.content
@@ -33,6 +33,7 @@ const marvel = {
                     func.$(`resultID${index}`).addEventListener("click" , () => {
                         marvel.renderCharacter(heroFound.id)
                     })
+                    document.getElementById('resultsStart').scrollIntoView()
                 }
             }
         }
@@ -502,7 +503,10 @@ elem.searchButton.addEventListener("click", ()=>{
     marvel.createListOfCharacters(hero)
 })
 
-elem.findRandomButton.addEventListener("click", ()=>{
-    //INCOMPLETE CODE
-    marvel.createListOfCharacters('a')
+elem.findRandomButton.addEventListener("click", async ()=>{
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    const URLAPI = `https://gateway.marvel.com:443/v1/public/characters?${ACCESSDATA.tsAccess}&nameStartsWith=${alphabet[Math.floor(Math.random() * alphabet.length)]}&apikey=${ACCESSDATA.publicKey}&${ACCESSDATA.md5HashAccess}`;
+    const response = await fetch(URLAPI)
+    const json = await response.json()
+    marvel.renderCharacter(json.data.results[Math.floor(Math.random() * json.data.results.length)].id)
 })

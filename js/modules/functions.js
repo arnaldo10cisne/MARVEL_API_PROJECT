@@ -31,6 +31,9 @@ export const renderMainInfo = (template, elementSelected, cardGalery, nameType) 
     if (nameType == 3) htmlNode.querySelector('.card_title').textContent = elementSelected.title
     if (elementSelected.thumbnail != null) htmlNode.querySelector('.card_thumbnail').setAttribute("src", `${elementSelected.thumbnail.path}.${elementSelected.thumbnail.extension}`)
     htmlNode.querySelector('.card_description').innerHTML = elementSelected.description
+    if (htmlNode.querySelector('.card_description').textContent == "" || htmlNode.querySelector('.card_description').textContent == null || htmlNode.querySelector('.card_description').textContent == undefined) {
+        htmlNode.querySelector('.card_description').innerHTML = 'Description not available'
+    }
     cardGalery.appendChild(htmlNode)
     document.getElementById('cardTypeList').style.display="flex"
     document.getElementById('cardStart').scrollIntoView()
@@ -61,6 +64,9 @@ export const renderElementsStructure = (template, templateID, structure, structu
         let tempNode = template.content
         let htmlNode = document.importNode(tempNode,true)
         htmlNode.querySelector(`.card_${structureType}_element__name`).textContent = (elementFound.name.length > 30) ? `${elementFound.name.slice(0,30)} ...` : `${elementFound.name}`
+        if (elementFound.name == "") {
+            htmlNode.querySelector(`.card_${structureType}_element__name`).textContent = '[Name not available]'
+        }
         if(structureType == 'rail') htmlNode.querySelector(`.card_${structureType}_element__thumbnail`).setAttribute("id", `${elementID}${index}`)
         if(structureType == 'list') htmlNode.querySelector(`.card_${structureType}_element__name`).setAttribute("id", `${elementID}${index}`)
         dataURI.push(elementFound.resourceURI)

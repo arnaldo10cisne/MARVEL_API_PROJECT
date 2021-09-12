@@ -10,6 +10,7 @@
     /* FONTS */
     --comic-font: 'Bangers';
     --marvel-font: 'MarvelFont';
+    --content-comic: 'Comic Neue';
 
     /* COLORS */
     --city-blue: #09426f;
@@ -21,6 +22,34 @@
     --creator-card-color: #0a473f;
 }
 
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.301);
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(223, 153, 24);
+    border: solid 1px black;
+    border-radius: 100px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(167, 114, 16);
+  }
+  
+  /* Handle on active */
+  ::-webkit-scrollbar-thumb:active {
+    background: rgb(94, 64, 9);
+  }
+
 /* GENERAL STYLES */
 
 * {
@@ -31,6 +60,7 @@
 
 html {
     font-size: 62.5%;
+    overflow-x: hidden;
 }
 
 body {
@@ -38,7 +68,9 @@ body {
     flex-direction: column;
     justify-content: stretch;
     min-width: 320px;
+    min-height: 100vh;
     background-color: var(--city-blue);
+    overflow-x: hidden;
 }
 
 li {
@@ -200,6 +232,7 @@ main {
 .guidebook__control_panel{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 100%;
     background-image: url('../assets/IMAGES/city_backgrond.jpg');
     background-position:bottom;
@@ -246,7 +279,7 @@ main {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    margin: 5px 0px 10px;
+    margin: 5px auto 10px;
 }
 .control_panel__button {
     width: 40%;
@@ -255,10 +288,6 @@ main {
 #marvelUniversePicture{
     width: 100vw;
     height: 200px;
-    /* background-image: url('../assets/IMAGES/marvel_unverse.png');
-    background-position: center;
-    background-size:contain;
-    background-repeat: no-repeat; */
 }
 
 /* SEARCH RESULTS */
@@ -277,6 +306,10 @@ main {
     margin: 5px 0;
     background-color: rgb(187, 178, 170);
     border: solid 3px black;
+    transition: 0.3s border;
+}
+.character_search_result__container:hover{
+    border: solid 3px white;
 }
 .search_result_color_1 {
     background-color: rgb(223, 153, 88);
@@ -399,10 +432,17 @@ main {
     width: 90%;
     text-align: center;
 }
+.card_thumbnail_and_description_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
 .card_description {
     font-size: 1.6rem;
     text-align: justify;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: var(--content-comic);
     width: 80%;
     margin: 20px 0;
     color: white;
@@ -413,6 +453,12 @@ main {
     color: white;
     font-family: var(--comic-font);
     letter-spacing: 3px;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.329);
+    width: 100vw;
+    text-align: center;
+    padding: 10px 0px;
 }
 .card_rail {
     display: flex;
@@ -436,6 +482,12 @@ main {
     justify-content: center;
     align-items: center;
     min-width: 50vw;
+    margin: 0px auto;
+    border: solid 3px transparent;
+    transition: 0.3s border;
+}
+.card_rail_element:hover {
+    border: solid 3px white;
 }
 .card_list_element {
     display: flex;
@@ -446,7 +498,11 @@ main {
     margin: 10px 0;
     background-color: rgb(224, 149, 50);
     border: solid 3px black;
+    transition: 0.3s border;
     padding: 5px 0;
+}
+.card_list_element:hover {
+    border: solid 3px white;
 }
 .card_rail_element__thumbnail {
     width: 80%;
@@ -457,18 +513,23 @@ main {
     text-align: center;
     font-size: 1.4rem;
     width: 80%;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: var(--content-comic);
+    margin: auto;
 }
 .card_list_element__name {
     font-size: 2rem;
+    font-family: var(--content-comic);
+    font-weight: 600;
+    color: black;
 }
 
 /* FOOTER */
 
 footer {
     /* DISPLAY AND POSITION */
-    position: absolute;
-    bottom: 0;
+    /* position: absolute;
+    bottom: 0%; */
+    margin-top: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -523,6 +584,16 @@ footer {
 
 /* TABLET */
 @media (min-width: 450px) {
+    .guidebook__control_panel{
+        height: 70vh;
+    }
+    .control_panel__button_container{
+        /* display: flex;
+        justify-content: space-around;
+        width: 100%;
+        margin: 5px 0px 10px; */
+        max-width: 600px;
+    }
     .search_bar_container {
         width: 300px;
         height: 150px;
@@ -532,14 +603,79 @@ footer {
         font-size: 4rem;
         width: 280px;
     }
+    .guidebook__character_search_results{
+        max-width: 600px;
+    }
+    .character_search_result__container__name{
+        font-size: 2.4rem;
+    }
+    .card_type_tag {
+        font-size: 1.5rem;
+    }
+    .card_thumbnail {
+        width: 450px;
+    }
+    .card_description {
+        max-width: 500px;
+    }
+    .card_rail_element {
+        min-width: 33.333vw;
+    }
+    .card_rail_element__thumbnail {
+        max-width: 260px;
+    }
+    .card_list {
+        max-width: 500px;
+    }
 }
 
 /* DESKTOP */
 @media (min-width: 1024px) {
-    
+    .subtitle {
+        font-size: 6rem;
+    }
+    .card_title {
+        font-size: 5rem;
+        margin: 25px;
+    }
+    .card_thumbnail_and_description_container{
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 50px;
+    }
+    .card_thumbnail {
+        width: 400px;
+        margin-right: 10px;
+    }
+    .card_description {
+        max-width: 350px;
+        margin-left: 10px;
+    }
+    .card_rail {
+        width: 95%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        justify-content: center;
+        row-gap: 25px;
+        overflow-x: hidden;
+        margin: auto;
+    }
+    .card_rail_element {
+        min-width: 12vw;
+        margin: auto;
+    }
+    .card_rail_element__thumbnail {
+        max-width: 300px;
+        margin: auto 0;
+    }
+    .card_list{
+        padding-right: 20px;
+    }
 }
 
 /* BIG DESKTOP */
 @media (min-width: 1400px) {
-    
+    .guidebook__control_panel{
+        height: 70vh;
+    }
  }

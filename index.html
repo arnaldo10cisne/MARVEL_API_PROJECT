@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@1,300&display=swap" rel="stylesheet">
 </head>
 <body>
     
@@ -38,7 +39,7 @@
         <div class="guidebook__control_panel">
             <h2 class="subtitle">FIND A MARVEL LEGEND</h2>
             <div class="search_bar_container">
-                <input id="searchHeroBar" class="control_panel__search_bar" type="text" name="" placeholder="Find something" spellcheck="false">
+                <input id="searchHeroBar" class="control_panel__search_bar" type="text" name="" placeholder="E.g. 'Iron man'" spellcheck="false">
             </div>
             <div class="control_panel__button_container">
                 <input id="searchButton" class="control_panel__button button button--yellow clickable" type="button" value="LET'S FIND IT">
@@ -49,6 +50,7 @@
 
         <!-- <div id="marvelUniversePicture"></div> -->
         
+        <div id="resultsStart"></div>
         <!-- SEARCH RESULTS CONTAINER -->
         <div id="characterSearchResults" class="guidebook__character_search_results">
             <template id="templateSearchResults">
@@ -74,14 +76,16 @@
             <template id="templateCharacterRender">
                 <div class="card_container card_color_1">
                     <span class="card_title">[HERO NAME]</span>
-                    <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt="">
-                    <p class="card_description">[DESCRIPTION]</p>
+                    <div class="card_thumbnail_and_description_container">
+                        <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt="">
+                        <p class="card_description">[DESCRIPTION]</p>
+                    </div>
                     
                     <h3 class="card_subtitle">Comics</h3>
                     <div id="charactersGalery_comicsRail" class="card_rail">
                         <template id="charactersGalery_comicRailTemplate">
                             <div class="card_rail_element">
-                                <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
                             </div>
                         </template>
@@ -91,7 +95,7 @@
                     <div id="charactersGalery_seriesRail" class="card_rail">
                         <template id="charactersGalery_seriesRailTemplate">
                             <div class="card_rail_element">
-                                <img id="seriesPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="seriesPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[SERIES NAME]</span>
                             </div>
                         </template>
@@ -124,14 +128,16 @@
             <template id="templateComicRender">
                 <div class="card_container card_color_2">
                     <span class="card_title">[COMIC NAME]</span>
-                    <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt=""> 
-                    <p class="card_description">[DESCRIPTION]</p>
+                    <div class="card_thumbnail_and_description_container">
+                        <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt="">
+                        <p class="card_description">[DESCRIPTION]</p>
+                    </div>
                     
                     <h3 class="card_subtitle">Characters</h3>
                     <div id="comicGalery_charactersRail" class="card_rail">
                         <template id="comicGalery_charactersRailTemplate">
                             <div class="card_rail_element">
-                                <img id="charactersPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="charactersPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[CHARACTER NAME]</span>
                             </div>
                         </template>
@@ -141,7 +147,7 @@
                     <div id="comicGalery_seriesRail" class="card_rail">
                         <template id="comicGalery_seriesRailTemplate">
                             <div class="card_rail_element">
-                                <img id="seriesPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="seriesPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[SERIES NAME]</span>
                             </div>
                         </template>
@@ -183,14 +189,16 @@
             <template id="templateSeriesRender">
                 <div class="card_container card_color_3">
                     <span class="card_title">[COMIC NAME]</span>
-                    <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt=""> 
-                    <p class="card_description">[DESCRIPTION]</p>
+                    <div class="card_thumbnail_and_description_container">
+                        <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt="">
+                        <p class="card_description">[DESCRIPTION]</p>
+                    </div>
                     
                     <h3 class="card_subtitle">Characters</h3>
                     <div id="seriesGalery_charactersRail" class="card_rail">
                         <template id="seriesGalery_charactersRailTemplate">
                             <div class="card_rail_element">
-                                <img id="charactersPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="charactersPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[CHARACTER NAME]</span>
                             </div>
                         </template>
@@ -200,7 +208,7 @@
                     <div id="seriesGalery_comicRail" class="card_rail">
                         <template id="seriesGalery_comicRailTemplate">
                             <div class="card_rail_element">
-                                <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
                             </div>
                         </template>
@@ -210,7 +218,7 @@
                     <div id="seriesGalery_eventsRail" class="card_rail">
                         <template id="seriesGalery_eventsRailTemplate">
                             <div class="card_rail_element">
-                                <img id="eventsPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="eventsPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
                             </div>
                         </template>
@@ -252,14 +260,16 @@
             <template id="templateEventsRender">
                 <div class="card_container  card_color_5">
                     <span class="card_title">[EVENT NAME]</span>
-                    <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt=""> 
-                    <p class="card_description">[DESCRIPTION]</p>
+                    <div class="card_thumbnail_and_description_container">
+                        <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt="">
+                        <p class="card_description">[DESCRIPTION]</p>
+                    </div>
                     
                     <h3 class="card_subtitle">Characters</h3>
                     <div id="eventsGalery_charactersRail" class="card_rail">
                         <template id="eventsGalery_charactersRailTemplate">
                             <div class="card_rail_element">
-                                <img id="charactersPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="charactersPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[CHARACTER NAME]</span>
                             </div>
                         </template>
@@ -269,7 +279,7 @@
                     <div id="eventsGalery_comicRail" class="card_rail">
                         <template id="eventsGalery_comicRailTemplate">
                             <div class="card_rail_element">
-                                <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
                             </div>
                         </template>
@@ -279,7 +289,7 @@
                     <div id="eventsGalery_seriesRail" class="card_rail">
                         <template id="eventsGalery_seriesRailTemplate">
                             <div class="card_rail_element">
-                                <img id="seriesPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="seriesPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
                             </div>
                         </template>
@@ -321,14 +331,16 @@
             <template id="templateStoriesRender">
                 <div class="card_container card_color_4">
                     <span class="card_title">[STORY NAME]</span>
-                    <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt=""> 
-                    <p class="card_description">[DESCRIPTION]</p>
+                    <div class="card_thumbnail_and_description_container">
+                        <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt="">
+                        <p class="card_description">[DESCRIPTION]</p>
+                    </div>
                     
                     <h3 class="card_subtitle">Characters</h3>
                     <div id="storiesGalery_charactersRail" class="card_rail">
                         <template id="storiesGalery_charactersRailTemplate">
                             <div class="card_rail_element">
-                                <img id="charactersPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="charactersPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[CHARACTER NAME]</span>
                             </div>
                         </template>
@@ -338,7 +350,7 @@
                     <div id="storiesGalery_comicRail" class="card_rail">
                         <template id="storiesGalery_comicRailTemplate">
                             <div class="card_rail_element">
-                                <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
                             </div>
                         </template>
@@ -348,7 +360,7 @@
                     <div id="storiesGalery_seriesRail" class="card_rail">
                         <template id="storiesGalery_seriesRailTemplate">
                             <div class="card_rail_element">
-                                <img id="seriesPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="seriesPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[SERIES NAME]</span>
                             </div>
                         </template>
@@ -358,7 +370,7 @@
                     <div id="storiesGalery_eventsRail" class="card_rail">
                         <template id="storiesGalery_eventsRailTemplate">
                             <div class="card_rail_element">
-                                <img id="eventsPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="eventsPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[EVENT NAME]</span>
                             </div>
                         </template>
@@ -391,14 +403,16 @@
             <template id="templateCreatorsRender">
                 <div class="card_container  card_color_6">
                     <span class="card_title">[EVENT NAME]</span>
-                    <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt=""> 
-                    <p class="card_description">[DESCRIPTION]</p>
+                    <div class="card_thumbnail_and_description_container">
+                        <img class="card_thumbnail" src="./assets/IMAGES/hydra_image_not_found.PNG" alt="">
+                        <p class="card_description">[DESCRIPTION]</p>
+                    </div>
                     
                     <h3 class="card_subtitle">Comics</h3>
                     <div id="creatorsGalery_comicsRail" class="card_rail">
                         <template id="creatorsGalery_comicsRailTemplate">
                             <div class="card_rail_element">
-                                <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
                             </div>
                         </template>
@@ -408,7 +422,7 @@
                     <div id="creatorsGalery_seriesRail" class="card_rail">
                         <template id="creatorsGalery_seriesRailTemplate">
                             <div class="card_rail_element">
-                                <img id="seriesPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="seriesPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
                             </div>
                         </template>
@@ -418,7 +432,7 @@
                     <div id="creatorsGalery_eventsRail" class="card_rail">
                         <template id="creatorsGalery_eventsRailTemplate">
                             <div class="card_rail_element">
-                                <img id="eventsPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <img id="eventsPicture00" class="card_rail_element__thumbnail clickable" src="https://www.istitutomarangoni.com/fe-web/img/marangoni/loader.gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
                             </div>
                         </template>
