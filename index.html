@@ -47,7 +47,7 @@
             
         </div>
 
-        <div id="marvelUniversePicture"></div>
+        <!-- <div id="marvelUniversePicture"></div> -->
         
         <!-- SEARCH RESULTS CONTAINER -->
         <div id="characterSearchResults" class="guidebook__character_search_results">
@@ -64,10 +64,11 @@
             <li class="card_type_tag tag_1">Character</li>
             <li class="card_type_tag tag_2">Comic</li>
             <li class="card_type_tag tag_3">Series</li>
-            <li class="card_type_tag tag_4">Story</li>
             <li class="card_type_tag tag_5">Event</li>
+            <li class="card_type_tag tag_4">Story</li>
             <li class="card_type_tag tag_6">Creator</li>
         </ul>
+
         <!-- CHARACTER CARD CONTAINER -->
         <div id='characterGalery' class="guidebook__character_galery">
             <template id="templateCharacterRender">
@@ -106,6 +107,13 @@
                     </div>
 
                     <h3 class="card_subtitle">More info</h3>
+                    <div id="charactersGalery_moreInfo" class="card_list">
+                        <template id="charactersGalery_moreInfoTemplate">
+                            <div class="card_list_element">
+                                <a id="infoLink00" class="card_list_element__name clickable" target="_blank" rel="noopener noreferrer">[INFO]</a>
+                            </div>
+                        </template>
+                    </div>
                     
                 </div>
             </template>
@@ -128,17 +136,7 @@
                             </div>
                         </template>
                     </div> 
-                    
-                    <h3 class="card_subtitle">Creators</h3>
-                    <div id="comicGalery_creatorsList" class="card_list">
-                        <template id="comicGalery_creatorsListTemplate">
-                            <div class="card_list_element">
-                                <small id="creatorsLink00" class="card_list_element__name clickable">[CREATORS NAME]</small>
-                            </div>
-                        </template>
-                    </div>
-                    
-                    
+
                     <h3 class="card_subtitle">Series</h3>
                     <div id="comicGalery_seriesRail" class="card_rail">
                         <template id="comicGalery_seriesRailTemplate">
@@ -148,7 +146,7 @@
                             </div>
                         </template>
                     </div>
-                    
+
                     <h3 class="card_subtitle">Stories</h3>
                     <div id="comicGalery_storiesList" class="card_list">
                         <template id="comicGalery_storiesListTemplate">
@@ -158,7 +156,23 @@
                         </template>
                     </div>
                     
+                    <h3 class="card_subtitle">Creators</h3>
+                    <div id="comicGalery_creatorsList" class="card_list">
+                        <template id="comicGalery_creatorsListTemplate">
+                            <div class="card_list_element">
+                                <small id="creatorsLink00" class="card_list_element__name clickable">[CREATORS NAME]</small>
+                            </div>
+                        </template>
+                    </div>
+
                     <h3 class="card_subtitle">More info</h3>
+                    <div id="comicGalery_moreInfo" class="card_list">
+                        <template id="comicGalery_moreInfoTemplate">
+                            <div class="card_list_element">
+                                <a id="infoLink00" class="card_list_element__name clickable" target="_blank" rel="noopener noreferrer">[INFO]</a>
+                            </div>
+                        </template>
+                    </div>
                     
                 </div>
             </template>
@@ -181,31 +195,13 @@
                             </div>
                         </template>
                     </div>
-                    
-                    <h3 class="card_subtitle">Creators</h3>
-                    <div id="seriesGalery_creatorsList" class="card_list">
-                        <template id="seriesGalery_creatorsListTemplate">
-                            <div class="card_list_element">
-                                <small id="creatorsLink00" class="card_list_element__name clickable">[CREATORS NAME]</small>
-                            </div>
-                        </template>
-                    </div>
-                    
+
                     <h3 class="card_subtitle">Comics</h3>
                     <div id="seriesGalery_comicRail" class="card_rail">
                         <template id="seriesGalery_comicRailTemplate">
                             <div class="card_rail_element">
                                 <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
-                            </div>
-                        </template>
-                    </div>
-                    
-                    <h3 class="card_subtitle">Stories</h3>
-                    <div id="seriesGalery_storiesList" class="card_list">
-                        <template id="seriesGalery_storiesListTemplate">
-                            <div class="card_list_element">
-                                <small id="storiesLink00" class="card_list_element__name clickable">[STORIES NAME]</small>
                             </div>
                         </template>
                     </div>
@@ -219,8 +215,33 @@
                             </div>
                         </template>
                     </div>
+
+                    <h3 class="card_subtitle">Stories</h3>
+                    <div id="seriesGalery_storiesList" class="card_list">
+                        <template id="seriesGalery_storiesListTemplate">
+                            <div class="card_list_element">
+                                <small id="storiesLink00" class="card_list_element__name clickable">[STORIES NAME]</small>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">Creators</h3>
+                    <div id="seriesGalery_creatorsList" class="card_list">
+                        <template id="seriesGalery_creatorsListTemplate">
+                            <div class="card_list_element">
+                                <small id="creatorsLink00" class="card_list_element__name clickable">[CREATORS NAME]</small>
+                            </div>
+                        </template>
+                    </div>
                     
                     <h3 class="card_subtitle">More info</h3>
+                    <div id="seriesGalery_moreInfo" class="card_list">
+                        <template id="seriesGalery_moreInfoTemplate">
+                            <div class="card_list_element">
+                                <a id="infoLink00" class="card_list_element__name clickable" target="_blank" rel="noopener noreferrer">[INFO]</a>
+                            </div>
+                        </template>
+                    </div>
                     
                 </div>
             </template>
@@ -243,31 +264,13 @@
                             </div>
                         </template>
                     </div>
-                    
-                    <h3 class="card_subtitle">Creators</h3>
-                    <div id="eventsGalery_creatorsList" class="card_list">
-                        <template id="eventsGalery_creatorsListTemplate">
-                            <div class="card_list_element">
-                                <small id="creatorsLink00" class="card_list_element__name clickable">[CREATORS NAME]</small>
-                            </div>
-                        </template>
-                    </div>
-                    
+
                     <h3 class="card_subtitle">Comics</h3>
                     <div id="eventsGalery_comicRail" class="card_rail">
                         <template id="eventsGalery_comicRailTemplate">
                             <div class="card_rail_element">
                                 <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
-                            </div>
-                        </template>
-                    </div>
-                    
-                    <h3 class="card_subtitle">Stories</h3>
-                    <div id="eventsGalery_storiesList" class="card_list">
-                        <template id="eventsGalery_storiesListTemplate">
-                            <div class="card_list_element">
-                                <small id="storiesLink00" class="card_list_element__name clickable">[STORIES NAME]</small>
                             </div>
                         </template>
                     </div>
@@ -281,8 +284,33 @@
                             </div>
                         </template>
                     </div>
+
+                    <h3 class="card_subtitle">Stories</h3>
+                    <div id="eventsGalery_storiesList" class="card_list">
+                        <template id="eventsGalery_storiesListTemplate">
+                            <div class="card_list_element">
+                                <small id="storiesLink00" class="card_list_element__name clickable">[STORIES NAME]</small>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">Creators</h3>
+                    <div id="eventsGalery_creatorsList" class="card_list">
+                        <template id="eventsGalery_creatorsListTemplate">
+                            <div class="card_list_element">
+                                <small id="creatorsLink00" class="card_list_element__name clickable">[CREATORS NAME]</small>
+                            </div>
+                        </template>
+                    </div>
                     
                     <h3 class="card_subtitle">More info</h3>
+                    <div id="eventsGalery_moreInfo" class="card_list">
+                        <template id="eventsGalery_moreInfoTemplate">
+                            <div class="card_list_element">
+                                <a id="infoLink00" class="card_list_element__name clickable" target="_blank" rel="noopener noreferrer">[INFO]</a>
+                            </div>
+                        </template>
+                    </div>
                     
                 </div>
             </template>
@@ -305,32 +333,13 @@
                             </div>
                         </template>
                     </div>
-                    
-                    <h3 class="card_subtitle">Events</h3>
-                    <div id="storiesGalery_eventsRail" class="card_rail">
-                        <template id="storiesGalery_eventsRailTemplate">
-                            <div class="card_rail_element">
-                                <img id="eventsPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
-                                <span class="card_rail_element__name">[EVENT NAME]</span>
-                            </div>
-                        </template>
-                    </div>
-                    
+
                     <h3 class="card_subtitle">Comics</h3>
                     <div id="storiesGalery_comicRail" class="card_rail">
                         <template id="storiesGalery_comicRailTemplate">
                             <div class="card_rail_element">
                                 <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
-                            </div>
-                        </template>
-                    </div>
-                    
-                    <h3 class="card_subtitle">Creators</h3>
-                    <div id="storiesGalery_creatorsList" class="card_list">
-                        <template id="storiesGalery_creatorsListTemplate">
-                            <div class="card_list_element">
-                                <small id="creatorsLink00" class="card_list_element__name clickable">[CREATORS NAME]</small>
                             </div>
                         </template>
                     </div>
@@ -345,7 +354,33 @@
                         </template>
                     </div>
                     
+                    <h3 class="card_subtitle">Events</h3>
+                    <div id="storiesGalery_eventsRail" class="card_rail">
+                        <template id="storiesGalery_eventsRailTemplate">
+                            <div class="card_rail_element">
+                                <img id="eventsPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
+                                <span class="card_rail_element__name">[EVENT NAME]</span>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <h3 class="card_subtitle">Creators</h3>
+                    <div id="storiesGalery_creatorsList" class="card_list">
+                        <template id="storiesGalery_creatorsListTemplate">
+                            <div class="card_list_element">
+                                <small id="creatorsLink00" class="card_list_element__name clickable">[CREATORS NAME]</small>
+                            </div>
+                        </template>
+                    </div>
+                    
                     <h3 class="card_subtitle">More info</h3>
+                    <div id="storiesGalery_moreInfo" class="card_list">
+                        <template id="storiesGalery_moreInfoTemplate">
+                            <div class="card_list_element">
+                                <a id="infoLink00" class="card_list_element__name clickable" target="_blank" rel="noopener noreferrer">[INFO]</a>
+                            </div>
+                        </template>
+                    </div>
                     
                 </div>
             </template>
@@ -365,15 +400,6 @@
                             <div class="card_rail_element">
                                 <img id="comicPicture00" class="card_rail_element__thumbnail clickable" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="">
                                 <span class="card_rail_element__name">[COMIC NAME]</span>
-                            </div>
-                        </template>
-                    </div>
-                    
-                    <h3 class="card_subtitle">Stories</h3>
-                    <div id="creatorsGalery_storiesList" class="card_list">
-                        <template id="creatorsGalery_storiesListTemplate">
-                            <div class="card_list_element">
-                                <small id="storiesLink00" class="card_list_element__name clickable">[STORIES NAME]</small>
                             </div>
                         </template>
                     </div>
@@ -398,13 +424,27 @@
                         </template>
                     </div>
                     
+                    <h3 class="card_subtitle">Stories</h3>
+                    <div id="creatorsGalery_storiesList" class="card_list">
+                        <template id="creatorsGalery_storiesListTemplate">
+                            <div class="card_list_element">
+                                <small id="storiesLink00" class="card_list_element__name clickable">[STORIES NAME]</small>
+                            </div>
+                        </template>
+                    </div>
+                    
                     <h3 class="card_subtitle">More info</h3>
+                    <div id="creatorsGalery_moreInfo" class="card_list">
+                        <template id="creatorsGalery_moreInfoTemplate">
+                            <div class="card_list_element">
+                                <a id="infoLink00" class="card_list_element__name clickable" target="_blank" rel="noopener noreferrer">[INFO]</a>
+                            </div>
+                        </template>
+                    </div>
                     
                 </div>
             </template>
         </div>
-
-        
 
     </main>
 

@@ -44,9 +44,12 @@ const marvel = {
         const json = await response.json()    
         const heroSelected = await json.data.results[0]
 
+        console.log('HERO', heroSelected)
+
         let comicURI = []
         let seriesURI = []
         let storiesURI = []
+        let moreInfoURI = []
         
         func.renderMainInfo(elem.templateCharacterRender, heroSelected, elem.characterGalery, 1)
 
@@ -85,6 +88,13 @@ const marvel = {
             marvel.renderStories, 
             ACCESSDATA,
             'list')
+
+        func.renderInfoLinks(
+            charactersGalery_moreInfoTemplate, 
+            'charactersGalery_moreInfoTemplate', 
+            charactersGalery_moreInfo, 
+            'charactersGalery_moreInfo', 
+            heroSelected.urls)
         
         func.renderImages(comicURI, 'comicPicture', ACCESSDATA)
 
@@ -97,6 +107,8 @@ const marvel = {
         const response = await fetch(URLAPI)
         const json = await response.json()    
         const comicSelected = await json.data.results[0]
+
+        console.log('comicSelected', comicSelected)
 
         let charactersURI = []
         let creatorsURI = []
@@ -163,6 +175,8 @@ const marvel = {
         const response = await fetch(URLAPI)
         const json = await response.json()    
         const creatorSelected = await json.data.results[0]
+
+        console.log('creatorSelected', creatorSelected)
 
         let comicURI = []
         let eventsURI = []
@@ -232,6 +246,8 @@ const marvel = {
         const response = await fetch(URLAPI)
         const json = await response.json()    
         const seriesSelected = await json.data.results[0]
+
+        console.log('seriesSelected', seriesSelected)
 
         let charactersURI = []
         let creatorsURI = []
@@ -313,6 +329,8 @@ const marvel = {
         const response = await fetch(URLAPI)
         const json = await response.json()    
         const storiesSelected = await json.data.results[0]
+
+        console.log('storiesSelected', storiesSelected)
 
         let charactersURI = []
         let creatorsURI = []
@@ -397,6 +415,8 @@ const marvel = {
         const json = await response.json()    
         const eventsSelected = await json.data.results[0]
 
+        console.log('eventsSelected', eventsSelected)
+
         let charactersURI = []
         let creatorsURI = []
         let storiesURI = []
@@ -473,9 +493,9 @@ const marvel = {
     },
 }
 
-document.getElementById('mainTitle').addEventListener("click", ()=>{
-    location.reload()
-})
+// document.getElementById('mainTitle').addEventListener("click", ()=>{
+//     location.reload()
+// })
 
 elem.searchButton.addEventListener("click", ()=>{
     let hero = elem.searchHeroBar.value

@@ -77,3 +77,16 @@ export const renderElementsStructure = (template, templateID, structure, structu
         document.getElementById('cardStart').scrollIntoView()
     }
 }
+
+export const renderInfoLinks = (template, templateID, structure, structureID, arrayOfElements) => {
+    template = document.getElementById(templateID)
+    structure = document.getElementById(structureID)
+    for (let index = 0; index < arrayOfElements.length; index++) {
+        const linkFound = arrayOfElements[index];
+        let tempNode = template.content
+        let htmlNode = document.importNode(tempNode,true)
+        htmlNode.querySelector(`.card_list_element__name`).textContent = linkFound.type.toUpperCase()
+        htmlNode.querySelector(`.card_list_element__name`).setAttribute("href", `${linkFound.url}`)
+        structure.appendChild(htmlNode)
+    }
+}
